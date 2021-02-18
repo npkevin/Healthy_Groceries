@@ -1,0 +1,71 @@
+.IngredientList {
+    font-family: 'Nunito', sans-serif;
+    width: 100%;
+    border-spacing: 4px 0;
+    overflow-y: scroll;
+    user-select: none;
+}
+
+/* TOP table row: table > tr */
+.IngredientList__labels {
+}
+
+/* NOT TOP table row: table > tr */
+.Ingredient {
+    height: 2.5rem;
+}
+
+.Ingredient:hover {
+    /* background-color: rgba(0, 0, 0, 0.15); */
+    cursor: pointer;
+}
+
+.IngredientList td:last-child,
+.IngredientList th:last-child {
+    text-align: left;
+    padding-left: 0.5rem;
+    width: 100%;
+}
+
+.Ingredient__weight input::-webkit-outer-spin-button,
+.Ingredient__weight input::-webkit-inner-spin-button {
+    margin: 0;
+    display: none;
+}
+.Ingredient__weight input {
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    width: 3rem;
+    height: 1.5rem;
+    padding: 0;
+    background-color: #ff9f43;
+    border: none;
+    border-radius: 0.4rem;
+
+}
+
+.Ingredient__measure select {
+    color: white;
+    font-weight: bold;
+    height: 1.5rem;
+    background-color: #10ac84;
+    border: none;
+    border-radius: 0.4rem;
+}
+
+
+.Ingredient__thumb {
+    display: flex;
+    height: inherit;
+    justify-content: center;
+    align-items: center;
+}
+.Ingredient__thumb img{
+    height: 1.5rem;
+    width: 1.5rem;
+    border-radius: 0.4rem;
+    /* border: 2px solid #2e86de; */
+    object-fit: cover;
+    object-position: 50% 50%;
+}

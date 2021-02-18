@@ -1,0 +1,96 @@
+.flipped {
+    transform: rotateY(180deg);
+}
+
+.RecipeCard-Container {
+    display: inline-block;
+    background-color: transparent;
+    perspective: 80rem;
+    scroll-snap-align: center;
+}
+
+.RecipeCard {
+    width: 20rem;
+    height: 30rem;
+    transform-style: preserve-3d;
+    transition: 0.6s;
+}
+
+.RecipeCard--front,
+.RecipeCard--back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    border-radius: 0.6rem;
+    box-shadow: 0.3rem 0.3rem 0.2rem rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.RecipeCard--front, 
+.RecipeCard--back {
+    display: flex;
+    flex-direction: column;
+}
+
+.RecipeCard--back {
+    transform: rotateY(180deg);
+}
+
+.RecipeCard--front .RecipeCard__tittle {
+    background-image: linear-gradient(to bottom, #2e86de, #54a0ff);
+}
+
+.RecipeCard--back .RecipeCard__tittle {
+    background-image: linear-gradient(to bottom, #10ac84, #1dd1a1);
+
+}
+
+.RecipeCard__tittle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #fff;
+    padding: 0.8rem;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    user-select: none;
+}
+
+.RecipeCard__tittle span {
+    flex-grow: 1;
+    margin-left: 0.4rem;
+}
+
+.tittle-icons {
+    height: 1.2rem;
+}
+
+.tittle-btns {
+    height: 1.2rem;
+    margin-left: 0.4rem;
+    cursor: pointer;
+}
+
+.tittle-btns:hover {
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
+.RecipeCard__PieChart {
+}
+
+.nofoods_message {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.nofoods_message span {
+    position: relative;
+    bottom: 2rem;
+}

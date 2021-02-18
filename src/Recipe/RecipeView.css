@@ -1,0 +1,14 @@
+.RecipeView {
+    display: inline-block;
+    /* white-space: nowrap; */
+    /* overflow-x: scroll; */
+    /* overflow-y: hidden; */
+    /* scroll-snap-type: x mandatory; */
+}
+
+.RecipeView::-webkit-scrollbar {
+    display: none;
+}
+
+
+
