@@ -1,3 +1,8 @@
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
 .header {
     display: flex;
     align-items: center;
@@ -6,11 +11,9 @@
     user-select: none;
     color: #fff;
     text-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.5);
-    background-image: linear-gradient(to bottom, #1dd1a1, #10ac84);
+    background-color: #2ecc71;
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
 }
-
-
 
 .section {
     display: flex;

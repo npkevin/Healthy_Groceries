@@ -1,3 +1,4 @@
+// Helper Class for dealing with Nutritionix raw data
 class NIXFood {
 
   // Class Variables

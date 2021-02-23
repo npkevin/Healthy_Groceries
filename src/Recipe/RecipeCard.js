@@ -3,11 +3,10 @@ import './RecipeCard.css';
 
 import { Pie } from 'react-chartjs-2';
 import { PieChart, List, Plus, PlusCircle, Edit3, X } from 'react-feather';
-import Ingredient from '../Ingredient/Ingredient'
-import FoodSearch from '../NutritionixAPI/FoodSearch';
-import NIXFood from '../NutritionixAPI/NIXFood';
+import Food from '../Food/Food'
+import FoodSearch from '../Food/FoodSearch';
+import NIXFood from '../Food/NutritionixAPI/NIXFood';
 
-// import Ingredient from '../Ingredient/Ingredient'
 
 class RecipeCard extends Component {
 
@@ -72,10 +71,10 @@ class RecipeCard extends Component {
     this.setState({
       chartjs: {
         data: {
-          labels: ['Fats', 'Protien', 'Carbs'],
+          labels: ['Fats', 'Protiens', 'Carbs'],
           datasets: [{
             data: totalMacros,
-            backgroundColor: ['#feca57', '#ff6b6b', '#54a0ff'],
+            backgroundColor: ['#f1c40f', '#e74c3c', '#3498db'],
           }],
         },
         options: {
@@ -105,29 +104,19 @@ class RecipeCard extends Component {
             </div>
             {/* FOOD/INGREDIENT LIST */}
             {this.state.foods.length > 0 ?
-              <table className="IngredientList">
-                <thead>
-                  <tr className="IngredientList__labels">
-                    <th></th>
-                    <th>Weight</th>
-                    <th>Unit</th>
-                    <th>Ingredient</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.state.foods.map(food => {
-                    return <Ingredient as="tr" food={food} key={food.item.id} />
-                  })}
-                </tbody>
-              </table>
+              <ul className="RecipeCard__FoodList">
+                {this.state.foods.map(food => {
+                  return <Food food={food} key={food.item.id} className="Food"/>
+                })}
+              </ul>
               : null}
             {/* ===============================
             TOGGABLE FOOD/INGREDIENT SEARCH 
             =================================== */}
             <div className={"RecipeCard__Search" + (this.state.showSearch ? "" : " hide")}>
               <div className="input-container">
-                <FoodSearch onResult={res => this.onSearchResult(res)} ref={this.searchInputRef}/>
-                <button onClick={() => this.setState({ showSearch: false })}><X /></button>
+                <FoodSearch className="FoodSearch__input" onResult={res => this.onSearchResult(res)} ref={this.searchInputRef} />
+                <button onClick={() => this.setState({ showSearch: false })} className="FoodSearch__btn"><X /></button>
               </div>
               <div className="result-container">
                 {this.state.searchResult ? (
@@ -135,11 +124,16 @@ class RecipeCard extends Component {
                     {this.state.searchResult.common.map((food, index) => {
                       return (
                         <li key={"commFoodKey_" + index} className="food" onClick={() => this.addFood(food)}>
-                          <PlusCircle size="1rem" />
                           <span>{NIXFood.capitalizeEachWord(food.food_name)}</span>
+                          <PlusCircle className="add" />
                         </li>
                       )
                     })}
+                    <li className="food-end">
+                      <span>
+                        No more results
+                      </span>
+                    </li>
                   </ul>
                 ) : null}
               </div>

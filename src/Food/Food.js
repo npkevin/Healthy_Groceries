@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
-import './Ingredient.css';
+import Select  from 'react-select'
 
-// An Ingredient can be a common food or a brand-named food
-// (basically a data structure for nutritionix api)
-class Ingredient extends Component {
+class Food extends Component {
 
   constructor(props) {
     super(props)
@@ -19,7 +17,7 @@ class Ingredient extends Component {
   convert = (e) => {
     const curUnit = this.state.user_measure
     const newUnit = e.target.value
-
+    
     let convertedValue = null;
     switch (curUnit + newUnit) {
       case ("grampound"):
@@ -51,38 +49,22 @@ class Ingredient extends Component {
 
   // TODO: update macros after user changes weight
 
-  asTableRow = () => {
-    const food = this.state.food
+  render = () => {
     return (
-      <tr className="Ingredient">
-        <td className="Ingredient__thumb">
-          <img src={food.photo.thumb} alt="" onClick={() => console.log(food)} />
-        </td>
-        <td className="Ingredient__weight">
-          <input type="number" value={this.state.user_weight} onChange={ e => this.setState({user_weight: e.target.value})} /></td>
-        <td className="Ingredient__measure">
-          <select defaultValue={this.state.user_measure} onChange={this.convert}>
+      <li className={this.props.className} onClick={() => console.log(this.state.food)}>
+        <div className="weight">
+          <input type="number" value={this.state.user_weight} onChange={ e => this.setState({user_weight: e.target.value})}/>
+          <select defaultValue={this.state.user_measure} onChange={e => this.convert(e)}>
             <option value="gram">g</option>
             <option value="pound">lb</option>
             <option value="ounce">oz</option>
           </select>
-        </td>
-        <td className="Ingredient__name">
-          <span>{food.displayName}</span>
-        </td>
-      </tr>
+        </div>
+        <img src={this.state.food.photo.thumb} alt="thumbnail"/>
+        <div className="name">{this.state.food.displayName}</div>
+      </li>
     )
-  }
-
-  asListEl = () => {
-    return null
-  }
-
-  render = () => {
-    if (this.props.as === "tr") return this.asTableRow()
-    if (this.props.as === "li") return this.asListEl()
-    else return null
   }
 }
 
-export default Ingredient;
+export default Food;
