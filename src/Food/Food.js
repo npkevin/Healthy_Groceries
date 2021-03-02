@@ -1,67 +1,105 @@
 import React, { Component } from 'react'
-import Select  from 'react-select'
 
 class Food extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      food: this.props.food,
+      ...this.props.food,
       user_weight: this.props.food.servingWeight.g,
-      user_measure: "gram",
+      user_unit: "gram",
       user_macros: this.props.food.nutrients.macros,
     }
   }
 
-  // TODO: This can be done better, a lot of rounding/truncation inaccuracies
-  convert = (e) => {
-    const curUnit = this.state.user_measure
-    const newUnit = e.target.value
-    
-    let convertedValue = null;
-    switch (curUnit + newUnit) {
+  // This can be done better, inaccurate (but good enough for cooking?)
+  convert = (value, from, to) => {
+    let conv_val = null;
+    switch (from + to) {
       case ("grampound"):
-        convertedValue = this.state.user_weight / 454;
+        conv_val = value * 0.0022046;
         break;
       case ("gramounce"):
-        convertedValue = this.state.user_weight / 28.35;
+        conv_val = value * 0.035275;
         break;
       case ("poundgram"):
-        convertedValue = this.state.user_weight * 454;
+        conv_val = value * 453.5924;
         break;
       case ("ouncegram"):
-        convertedValue = this.state.user_weight * 28.35;
+        conv_val = value * 28.34952;
         break;
       case ("poundounce"):
-        convertedValue = this.state.user_weight * 16;
+        conv_val = value * 16;
         break;
       case ("ouncepound"):
-        convertedValue = this.state.user_weight / 16;
+        conv_val = value / 16;
         break;
       default:
         break;
     }
+
+    // Fractional grams are pointless for cooking. round it.
+    // (+ 0.1 for traditional rounding)
+    if (to === "gram")
+      conv_val = Math.round(conv_val + 0.1);
+    else
+      conv_val = conv_val.toFixed(2);
+    
+    return conv_val
+  }
+
+  unitChange = (new_unit) => {
+    const cur_unit = this.state.user_unit
+    const weight = this.state.user_weight;
+    const conv_val = this.convert(weight, cur_unit, new_unit);
+    
     this.setState({
-      user_measure: newUnit,
-      user_weight: convertedValue.toFixed(2)
+      user_unit: new_unit,
+      user_weight: conv_val,
     })
   }
 
-  // TODO: update macros after user changes weight
+  // Calculates nutrients by comparing current-weight to original-weight (grams)
+  weightChange = (new_weight) => {
+    let weightAsGrams = new_weight
+
+    if (this.state.user_unit !== "gram")
+      weightAsGrams = this.convert(new_weight, this.state.user_unit, "gram")
+
+    const multiplier = weightAsGrams / this.state.servingWeight.g
+
+    const macros = {
+      c : this.state.nutrients.macros.c * multiplier,
+      f : this.state.nutrients.macros.f * multiplier,
+      p : this.state.nutrients.macros.p * multiplier,
+    }
+
+    this.setState({
+      user_weight: new_weight,
+      user_macros: macros
+    })
+
+    this.props.updateSelf(this.props.index, {
+      unit: this.state.user_unit,
+      weight: new_weight,
+      macros: macros,
+    })
+
+  }
 
   render = () => {
     return (
-      <li className={this.props.className} onClick={() => console.log(this.state.food)}>
+      <li className={this.props.className} onClick={() => console.log(this.props.index, this.state)}>
         <div className="weight">
-          <input type="number" value={this.state.user_weight} onChange={ e => this.setState({user_weight: e.target.value})}/>
-          <select defaultValue={this.state.user_measure} onChange={e => this.convert(e)}>
+          <input type="number" value={this.state.user_weight} onChange={ e => this.weightChange(e.target.value)}/>
+          <select defaultValue={this.state.user_unit} onChange={e => this.unitChange(e.target.value)}>
             <option value="gram">g</option>
             <option value="pound">lb</option>
             <option value="ounce">oz</option>
           </select>
         </div>
-        <img src={this.state.food.photo.thumb} alt="thumbnail"/>
-        <div className="name">{this.state.food.displayName}</div>
+        <img src={this.state.photo.thumb} alt="thumbnail"/>
+        <div className="name">{this.state.displayName}</div>
       </li>
     )
   }

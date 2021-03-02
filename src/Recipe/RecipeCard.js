@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './RecipeCard.css';
 
 import { Pie } from 'react-chartjs-2';
-import { PieChart, List, Plus, PlusCircle, Edit3, X } from 'react-feather';
+import { PieChart, List, Plus, PlusCircle, Edit3, X, Check } from 'react-feather';
 import Food from '../Food/Food'
 import FoodSearch from '../Food/FoodSearch';
 import NIXFood from '../Food/NutritionixAPI/NIXFood';
@@ -15,6 +15,8 @@ class RecipeCard extends Component {
     this.searchInputRef = React.createRef();
     this.state = {
       flipped: false,
+      editable: this.props.edit ? true : false,
+      name: this.props.name,
       showSearch: false,
       searchResult: null,
       foods: [],
@@ -23,15 +25,24 @@ class RecipeCard extends Component {
   }
 
   addFood = (food) => {
-    let newFoodArr = this.state.foods;
+    let foodArr = this.state.foods;
     let cleanedFood = new NIXFood(food)
-    newFoodArr.push(cleanedFood.data);
+    foodArr.push(cleanedFood.data);
     this.searchInputRef.current.clearSearch();
     this.setState({
-      foods: newFoodArr,
+      foods: foodArr,
       showSearch: false,
       searchResult: null,
     });
+  }
+
+  updateFoodUserData = (index, user_data) => {
+    let foodArr = this.state.foods;
+    foodArr[index] = {
+      ...this.state.foods[index],
+      user: user_data,
+    }
+    this.setState({foods: foodArr})
   }
 
   clearAllFoods = () => {
@@ -41,6 +52,20 @@ class RecipeCard extends Component {
   flipToBack = () => {
     if (this.state.foods.length > 0) this.updateChartjsData();
     this.setState({ flipped: true });
+  }
+
+  // TODO: add more than just updating names
+  saveChanges = () => {
+    this.props.updateName(this.state.name, this.props.index)
+    this.setState({editable: false})
+  }
+
+  discardChanges = () => {
+    // Keep name as non-updated props.name
+    this.setState({
+      editable: false,
+      name: this.props.name,
+    })
   }
 
   onSearchResult = (result) => {
@@ -57,23 +82,19 @@ class RecipeCard extends Component {
     // [fats, prot, carbs]
     let totalMacros = [0, 0, 0]
 
+    // Each food is an NIXFood
     this.state.foods.forEach(food => {
-      totalMacros[0] += food.nutrients.macros.f;
-      totalMacros[1] += food.nutrients.macros.p;
-      totalMacros[2] += food.nutrients.macros.c;
+      totalMacros[0] += food.user ? food.user.macros.f : food.nutrients.macros.f;
+      totalMacros[1] += food.user ? food.user.macros.p : food.nutrients.macros.p;
+      totalMacros[2] += food.user ? food.user.macros.c : food.nutrients.macros.c;
     })
-
-    // dirty fix for small decimals: apparently chartjs can take strings aswell as numbers here
-    totalMacros[0] = totalMacros[0].toFixed(2);
-    totalMacros[1] = totalMacros[1].toFixed(2);
-    totalMacros[2] = totalMacros[2].toFixed(2);
 
     this.setState({
       chartjs: {
         data: {
           labels: ['Fats', 'Protiens', 'Carbs'],
           datasets: [{
-            data: totalMacros,
+            data: totalMacros.map( macro => macro.toFixed(2)),
             backgroundColor: ['#f1c40f', '#e74c3c', '#3498db'],
           }],
         },
@@ -97,16 +118,38 @@ class RecipeCard extends Component {
           <div className="front">
             <div className="RecipeCard__navbar">
               <List className="icon" />
-              <span className="label">{this.props.name}</span>
-              <Edit3 className="button" onClick={() => { }} />
-              <PieChart className="button" onClick={this.flipToBack} />
-              <Plus className="button" onClick={() => this.setState({ showSearch: true })} />
+              {this.state.editable ?
+                <>
+                  <input
+                    className="label edit"
+                    type="text" value={this.state.name}
+                    onChange={e => this.setState({name: e.target.value})}
+                  />
+                  <Check className="button" onClick={this.saveChanges} />
+                  <X className="button" onClick={this.discardChanges}/>
+                </>
+                :
+                <>
+                  <span className="label">{this.state.name}</span>
+                  <Edit3 className="button" onClick={() => this.setState({ editable: true })} />
+                  <PieChart className="button" onClick={this.flipToBack} />
+                  <Plus className="button" onClick={() => this.setState({ showSearch: true })} />
+                </>
+              }
             </div>
-            {/* FOOD/INGREDIENT LIST */}
+            {/* =========================
+            FOOD/INGREDIENT LIST
+            ============================= */}
             {this.state.foods.length > 0 ?
               <ul className="RecipeCard__FoodList">
-                {this.state.foods.map(food => {
-                  return <Food food={food} key={food.item.id} className="Food"/>
+                {this.state.foods.map((food, index) => {
+                  return (<Food
+                    className="Food"
+                    food={food}
+                    key={food.item.id + "_" + index}
+                    index={index}
+                    updateSelf={this.updateFoodUserData}
+                  />)
                 })}
               </ul>
               : null}

@@ -34,7 +34,7 @@ class RecipeView extends Component {
       <Section className="RecipeView" name="Recipes" add={this.addCard}>
         { this.state.cards.length > 0 ?
           this.state.cards.map((cardName, index) => {
-            return <RecipeCard name={cardName} key={index} updateName={this.updateName} />
+            return <RecipeCard name={cardName} key={index} index={index} updateName={this.updateName} />
           })
           : null}
       </Section>
