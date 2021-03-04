@@ -10,40 +10,81 @@ const NutritionalLabel = (props) => {
   const foods = props.children
 
   // Sum all the nurients together
-  let totalNutrients = {}
+  let nutrients = {}
   foods.forEach(food => {
     Object.keys(food.nutrients).forEach( nutrient => {
-      if (totalNutrients.hasOwnProperty(nutrient))
-        totalNutrients[nutrient] += food.nutrients[nutrient]
+      if (nutrients.hasOwnProperty(nutrient))
+      nutrients[nutrient] += food.nutrients[nutrient]
       else 
-        totalNutrients[nutrient] = food.nutrients[nutrient]
+      nutrients[nutrient] = food.nutrients[nutrient]
     })
   });
 
   // 9cals/fat, 4cals/prot, 4cals/carbs
   const calories = Math.round(
-    totalNutrients.totalFats * 9 +
-    totalNutrients.totalProtiens * 4 +
-    totalNutrients.totalCarbs * 4
+    nutrients.totalFats * 9 +
+    nutrients.totalProtiens * 4 +
+    nutrients.totalCarbs * 4
   );
 
   return (
-    <div className="NutritionalLabel">
-      <h1>Nutrition Facts</h1>
-      <hr className="thin light"/>
+    <div className="NutritionLabel">
+      <div>
+        <div className="bling-toggle">
+          <span className="bling-toggle__en" style={{fontWeight: "bold"}}>EN</span>/
+          <span className="bling-toggle__fr">FR</span>
+        </div>
+        <h1>Nutrition Facts</h1>
+      </div>
       <div className="serving-size">
-        {/* TODO: make value modifiable */}
-        <span className="value">1</span> 
-        <span> servings per recipe</span>
+        <span className="value">##</span><span> servings per recipe</span>
       </div>
-      <div className="total-cals">
-        <span className="label">Calories</span>
-        <span className="value">{calories}</span>
+      <hr/>
+      <div className="calories-dlabel">
+        <div className="calories">
+          <span>Calories {calories}</span>
+          <hr className="thick"/>
+        </div>
+        <span className="dpercent-label">% Daily Value*</span>
       </div>
+      <div className="nutrient-breakdown">
+        <div className="nutrient">
+          <span><span style={{fontWeight: "bold"}}>Fat </span>{Math.ceil(nutrients.totalFats)} g</span>
+          <span className="dpercent">## %</span>
+        </div>
+        <div className="breakdown">
+          <span>Saturated ## g</span>
+          <span>+ Trans ## g</span>
+        </div>
+      </div>
+      <hr className="thin"/>
+      <div className="nutrient-breakdown">
+        <div className="nutrient">
+          <span><span style={{fontWeight: "bold"}}>Carbohydrate </span>{Math.ceil(nutrients.totalCarbs)} g</span>
+          <span className="dpercent">## %</span>
+        </div>
+        <div className="breakdown">
+          <span>Fibre ## g</span>
+          <span>Sugar ## g</span>
+        </div>
+      </div>
+      <hr className="thin"/>
+      <span><span style={{fontWeight: "bold"}}>Protien </span>{Math.ceil(nutrients.totalProtiens)} g</span>
+      <hr className="thin"/>
+      <span><span style={{fontWeight: "bold"}}>Cholesterol </span>## g</span>
+      <hr className="thin"/>
+      <span><span style={{fontWeight: "bold"}}>Sodium </span>## g</span>
       <hr className="thick"/>
-      <span style={{textAlign: "end", fontSize: "0.8rem", fontWeight: "bold"}}> % Daily Value*</span>
-      <hr className="thin" style={{marginTop: "3px"}}/>
+      <span>Potassium ## g</span>
+      <hr className="thin"/>
+      <span>Calcium ## g</span>
+      <hr className="thin"/>
+      <span>Iron ## g</span>
 
+
+      {/* END OF NUTRITION LABEL */}
+      <hr className="thick"/>
+      <span style={{fontSize: "0.8rem"}}><span style={{fontWeight: "bold"}}>*</span> 5% or less is <span style={{fontWeight: "bold"}}>a little</span>, 15% or more is <span style={{fontWeight: "bold"}}>a lot</span></span>
     </div>
   )
 }

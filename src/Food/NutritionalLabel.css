@@ -1,4 +1,4 @@
-.NutritionalLabel {
+.NutritionLabel {
     display: flex;
     flex-direction: column;
     border: 1px solid black;
@@ -6,47 +6,76 @@
     margin: 0 0.5rem;
 }
 
-.NutritionalLabel h1 {
+.NutritionLabel h1 {
     margin: 0;
     font-size: 2rem;
 }
 
-.total-cals {
+
+.calories-dlabel {
     display: flex;
-    align-items: flex-end;
+
 }
 
-.total-cals .label {
+.dpercent-label {
+    display: flex;
     flex-grow: 1;
-    font-size: 1.8rem;
+    align-items: flex-end;
+    justify-content: flex-end;
+    font-size: 0.8rem;
     font-weight: bold;
 }
 
-.total-cals .value {
-    font-size: 2.2rem;
+.calories {
+    font-size: 1.6rem;
     font-weight: bold;
 }
 
-.NutritionalLabel hr {
-    background-color: black;
-    margin: 0;
+.nutrient-breakdown {
+    margin-top: 0.3rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.nutrient {
+    display: flex;
+}
+
+.breakdown {
+    display: flex;
+    flex-direction: column;
+    margin-left: 1rem;
+}
+
+.dpercent {
+    flex-grow: 1;
+    text-align: right;
+}
+
+.bling-toggle {
+    float: right;
+    background: #bdc3c7;
+    padding: 0.1rem 0.5rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.NutritionLabel hr {
+    background-color: #000;
+    height: 2px;
+    margin: 2px 0 0 0;
     border: none;
 }
 
-hr.light {
-    background-color: rgb(180, 180, 180);
-}
-
-hr.thin {
+.NutritionLabel hr.thin {
     height: 1px;
 }
 
-hr.thick {
-    height: 5px;
-    margin: 2px 0;
+.NutritionLabel hr.thick {
+    height: 4px;
 }
 
-hr.thicker {
-    height: 10px;
-    margin: 4px 0;
+.NutritionLabel hr.light {
+    background-color: rgb(180, 180, 180);
 }
