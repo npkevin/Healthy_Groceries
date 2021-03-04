@@ -4,6 +4,7 @@ import './RecipeCard.css';
 import { Pie } from 'react-chartjs-2';
 import { PieChart, List, Plus, PlusCircle, Edit3, X, Check } from 'react-feather';
 import Food from '../Food/Food'
+import NutritionalLabel from '../Food/NutritionalLabel'
 import FoodSearch from '../Food/FoodSearch';
 import NIXFood from '../Food/NutritionixAPI/NIXFood';
 
@@ -16,10 +17,10 @@ class RecipeCard extends Component {
     this.state = {
       flipped: false,
       editable: this.props.edit ? true : false,
-      name: this.props.name,
+      name: this.props.name, // * TODO: upload firebase to save this card
       showSearch: false,
       searchResult: null,
-      foods: [],
+      foods: [], // * TODO: upload firebase to save this card
       chartjs: null,
     }
   }
@@ -42,7 +43,7 @@ class RecipeCard extends Component {
       ...this.state.foods[index],
       user: user_data,
     }
-    this.setState({foods: foodArr})
+    this.setState({ foods: foodArr })
   }
 
   clearAllFoods = () => {
@@ -57,7 +58,7 @@ class RecipeCard extends Component {
   // TODO: add more than just updating names
   saveChanges = () => {
     this.props.updateName(this.state.name, this.props.index)
-    this.setState({editable: false})
+    this.setState({ editable: false })
   }
 
   discardChanges = () => {
@@ -84,9 +85,9 @@ class RecipeCard extends Component {
 
     // Each food is an NIXFood
     this.state.foods.forEach(food => {
-      totalMacros[0] += food.user ? food.user.macros.f : food.nutrients.macros.f;
-      totalMacros[1] += food.user ? food.user.macros.p : food.nutrients.macros.p;
-      totalMacros[2] += food.user ? food.user.macros.c : food.nutrients.macros.c;
+      totalMacros[0] += food.user ? food.user.nutrients.totalFats : food.nutrients.totalFats;
+      totalMacros[1] += food.user ? food.user.nutrients.totalProtiens : food.nutrients.totalProtiens;
+      totalMacros[2] += food.user ? food.user.nutrients.totalCarbs : food.nutrients.totalCarbs;
     })
 
     this.setState({
@@ -94,7 +95,7 @@ class RecipeCard extends Component {
         data: {
           labels: ['Fats', 'Protiens', 'Carbs'],
           datasets: [{
-            data: totalMacros.map( macro => macro.toFixed(2)),
+            data: totalMacros.map(macro => macro.toFixed(2)),
             backgroundColor: ['#f1c40f', '#e74c3c', '#3498db'],
           }],
         },
@@ -123,10 +124,10 @@ class RecipeCard extends Component {
                   <input
                     className="label edit"
                     type="text" value={this.state.name}
-                    onChange={e => this.setState({name: e.target.value})}
+                    onChange={e => this.setState({ name: e.target.value })}
                   />
                   <Check className="button" onClick={this.saveChanges} />
-                  <X className="button" onClick={this.discardChanges}/>
+                  <X className="button" onClick={this.discardChanges} />
                 </>
                 :
                 <>
@@ -163,22 +164,26 @@ class RecipeCard extends Component {
               </div>
               <div className="result-container">
                 {this.state.searchResult ? (
+                  <>
                   <ul className="result">
                     {this.state.searchResult.common.map((food, index) => {
                       return (
                         <li key={"commFoodKey_" + index} className="food" onClick={() => this.addFood(food)}>
+                          <img src={food.photo.thumb} alt=""/>
                           <span>{NIXFood.capitalizeEachWord(food.food_name)}</span>
                           <PlusCircle className="add" />
                         </li>
                       )
                     })}
-                    <li className="food-end">
-                      <span>
-                        No more results
-                      </span>
-                    </li>
                   </ul>
+                  <span className="attribution no-result">
+                      No more results
+                    </span>
+                  </>
                 ) : null}
+                <span className="attribution">
+                  Powered By Nutritionix
+                </span>
               </div>
             </div>
           </div>
@@ -188,9 +193,14 @@ class RecipeCard extends Component {
               <span className="label">Nutrients</span>
               <List className="button" onClick={() => this.setState({ flipped: false })} />
             </div>
-            {/* PIE CHART FOR NUTRIENTS */}
+            {/* ==============
+            NUTRIENTS
+            ================== */}
             {this.state.chartjs !== null ?
-              <Pie data={this.state.chartjs.data} options={this.state.chartjs.options} />
+              <>
+                <NutritionalLabel>{this.state.foods}</NutritionalLabel>
+                <Pie data={this.state.chartjs.data} options={this.state.chartjs.options} />
+              </>
               :
               <div className="chartjs-no-data">
                 <span>No nutritional information to show</span>

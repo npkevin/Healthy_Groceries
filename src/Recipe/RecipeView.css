@@ -7,7 +7,7 @@
 }
 
 .RecipeView::-webkit-scrollbar {
-    /* display: none; */
+    display: none;
 }
 
 

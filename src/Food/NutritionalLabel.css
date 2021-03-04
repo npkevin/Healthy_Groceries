@@ -1,0 +1,52 @@
+.NutritionalLabel {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    padding: 4px;
+    margin: 0 0.5rem;
+}
+
+.NutritionalLabel h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+.total-cals {
+    display: flex;
+    align-items: flex-end;
+}
+
+.total-cals .label {
+    flex-grow: 1;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.total-cals .value {
+    font-size: 2.2rem;
+    font-weight: bold;
+}
+
+.NutritionalLabel hr {
+    background-color: black;
+    margin: 0;
+    border: none;
+}
+
+hr.light {
+    background-color: rgb(180, 180, 180);
+}
+
+hr.thin {
+    height: 1px;
+}
+
+hr.thick {
+    height: 5px;
+    margin: 2px 0;
+}
+
+hr.thicker {
+    height: 10px;
+    margin: 4px 0;
+}

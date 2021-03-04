@@ -58,28 +58,28 @@ class NIXFood {
 
   /* Nutrional macros as defined by (Nutrionix API v2 Nutrient Mapping):
   https://docs.google.com/spreadsheets/d/14ssR3_vFYrVAidDLJoio07guZM80SMR5nxdGpAX-1-A/edit#gid=0
-  nutrObj[].attr_id = 203(prots), 204(fats), 205(carbs) */
+  nutrArr[].attr_id = 203(prots), 204(fats), 205(carbs) */
   // TODO: Finish all relavent nutrients
-  calcFoodNutrition = (nutrObj) => {
+  calcFoodNutrition = (nutrArr) => {
     let nutrients = {};
-    nutrients.macros = {
-      c: 0,
-      f: 0,
-      p: 0,
+    nutrients = {
+      totalCarbs: 0,
+      totalFats: 0,
+      totalProtiens: 0,
     }
-    nutrObj.forEach(nutrient => {
+    nutrArr.forEach(nutrient => {
       switch (nutrient.attr_id) {
         // total protiens (g)
         case 203:
-          nutrients.macros.p = nutrient.value; 
+          nutrients.totalProtiens = nutrient.value; 
           break;
           // total fats (g)
         case 204:
-          nutrients.macros.f = nutrient.value;
+          nutrients.totalFats = nutrient.value;
           break;
           // total carbs (g)
         case 205:
-          nutrients.macros.c = nutrient.value;
+          nutrients.totalCarbs = nutrient.value;
           break;
         default:
           break;

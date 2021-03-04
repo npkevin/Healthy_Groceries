@@ -112,7 +112,9 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   opacity: 100%;
-  backdrop-filter: blur(5px);
+  /* So many issues with backdrop-filter
+  and cross browser support ... */
+  /* backdrop-filter: blur(5px); */
   transition: 0.3s;
 }
 
@@ -125,9 +127,9 @@
   display: flex;
   margin: 1rem;
   margin-bottom: 0;
-  height: 2rem;
-  min-height: 2rem;
-  border-radius: 0.3rem;
+  height: 2.5rem;
+  min-height: 2.5rem;
+  border-radius: 0.5rem;
   box-shadow: 0.25rem 0.3rem 0.5rem rgba(0, 0, 0, 0.4);
   overflow: hidden;
 }
@@ -138,6 +140,8 @@
   font-size: 1rem;
   padding-left: 1rem;
   border: none;
+  border-radius: 0;
+  margin: 0;
 }
 
 .RecipeCard__Search .FoodSearch__btn {
@@ -145,10 +149,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 2rem;
+  width: 2.5rem;
   background-color: #c0392b;
   border: none;
   cursor: pointer;
+  margin: 0;
 }
 
 .RecipeCard__Search button:hover {
@@ -156,7 +161,10 @@
 }
 
 .RecipeCard__Search .result-container {
-  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
   padding-top: 0;
   overflow-y: scroll;
 }
@@ -166,7 +174,8 @@
 }
 
 .RecipeCard__Search .result {
-  font-size: 1em;
+  font-size: 1rem;
+  width: 100%;
   padding: 0;
   margin: 0;
   list-style-type: none;
@@ -176,21 +185,34 @@
   display: flex;
   align-items: center;
   background-color: #fff;
-  margin: 0.6rem 0 0 0;
-  padding: 0.3rem 0.5rem;
-  border-radius: 0.3rem;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
   box-shadow: 0.25rem 0.3rem 0.5rem rgba(0, 0, 0, 0.4);
+  cursor: pointer;
 }
 
-.RecipeCard__Search .food:hover {
-  background-color: #bdc3c7;
+
+.RecipeCard__Search .food img {
+  height: 1rem;
+  width: 1rem;
+  object-fit: cover;
+  object-position: 50% 50%;
+  margin-right: 0.5rem;
 }
 
-.RecipeCard__Search .food-end {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 1rem;
+.attribution {
+  background: #f1c40f;
+  color: white;
+  font-weight: bold;
+  width: fit-content;
+  border-radius: 1rem;
+  padding: 0.3rem 1rem;
+  margin-top: 1rem;
+}
+
+.no-result {
+  background-color: #f39c12;
 }
 
 .RecipeCard__Search .food span {
@@ -199,7 +221,7 @@
 
 .RecipeCard__Search .food .add {
   /* background-color: red; */
-  color: #10ac84;
+  color: #27ae60;
   border-top-right-radius: 0.3rem;
   border-bottom-right-radius: 0.3rem;
   height: 1.5rem;
@@ -300,8 +322,10 @@
   bottom: 2rem;
 }
 
+
+
 @media only screen and (max-width: 425px) {
   .RecipeCard {
-    width: 85vw;
+    width: 90vw;
   }
 }
