@@ -43,8 +43,18 @@
 
 .breakdown {
     display: flex;
-    flex-direction: column;
     margin-left: 1rem;
+}
+
+.breakdown__values{
+    display: flex;
+    flex-direction: column;
+}
+
+.breakdown .dpercent{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 .dpercent {

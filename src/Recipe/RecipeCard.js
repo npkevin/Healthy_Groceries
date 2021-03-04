@@ -4,7 +4,7 @@ import './RecipeCard.css';
 import { Pie } from 'react-chartjs-2';
 import { PieChart, List, Plus, PlusCircle, Edit3, X, Check } from 'react-feather';
 import Food from '../Food/Food'
-import NutritionalLabel from '../Food/NutritionalLabel'
+import NutritionLabel from '../Food/NutritionLabel'
 import FoodSearch from '../Food/FoodSearch';
 import NIXFood from '../Food/NutritionixAPI/NIXFood';
 
@@ -198,7 +198,7 @@ class RecipeCard extends Component {
             ================== */}
             {this.state.chartjs !== null ?
               <>
-                <NutritionalLabel>{this.state.foods}</NutritionalLabel>
+                <NutritionLabel>{this.state.foods}</NutritionLabel>
                 <Pie data={this.state.chartjs.data} options={this.state.chartjs.options} />
               </>
               :
