@@ -8,7 +8,7 @@ class Food extends Component {
       ...this.props.food,
       user_weight: this.props.food.servingWeight.g,
       user_unit: "gram",
-      user_macros: this.props.food.nutrients.macros,
+      user_nutri: this.props.food.nutrients,
     }
   }
 
@@ -68,30 +68,33 @@ class Food extends Component {
 
     const multiplier = weightAsGrams / this.state.servingWeight.g
 
-    const macros = {
-      c : this.state.nutrients.macros.c * multiplier,
-      f : this.state.nutrients.macros.f * multiplier,
-      p : this.state.nutrients.macros.p * multiplier,
+    let nutrients = {
+      totalCarbs : this.state.nutrients.totalCarbs * multiplier,
+      totalFats : this.state.nutrients.totalFats * multiplier,
+      totalProtiens : this.state.nutrients.totalProtiens * multiplier,
     }
 
     this.setState({
       user_weight: new_weight,
-      user_macros: macros
+      user_nutri: nutrients
     })
 
     this.props.updateSelf(this.props.index, {
       unit: this.state.user_unit,
       weight: new_weight,
-      macros: macros,
+      nutrients: nutrients,
     })
 
   }
 
   render = () => {
     return (
-      <li className={this.props.className} onClick={() => console.log(this.props.index, this.state)}>
+      <li className={this.props.className}>
         <div className="weight">
-          <input type="number" value={this.state.user_weight} onChange={ e => this.weightChange(e.target.value)}/>
+          <input type="number"
+            value={this.state.user_weight}
+            onChange={ e => this.weightChange(e.target.value)}
+          />
           <select defaultValue={this.state.user_unit} onChange={e => this.unitChange(e.target.value)}>
             <option value="gram">g</option>
             <option value="pound">lb</option>
