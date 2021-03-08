@@ -12,7 +12,6 @@ class NutritionLabel extends Component {
     this.state = {
       // array of NIXFoods
       foods: this.props.children,
-      nutrients: this.getAllNutrients(this.props.children),
       serves: 1,
       lang_fr: false,
     }
@@ -28,11 +27,12 @@ class NutritionLabel extends Component {
   getAllNutrients = (foodArr) => {
     let tmpNutrients = {}
     foodArr.forEach(food => {
-      Object.keys(food.nutrients).forEach(nutrient => {
-        if (tmpNutrients.hasOwnProperty(nutrient)) {
-          tmpNutrients[nutrient] += food.nutrients[nutrient]
+      const nutrients = (food.user ? food.user.nutrients : food.nutrients)
+      Object.keys(nutrients).forEach(n => {
+        if (tmpNutrients.hasOwnProperty(n)) {
+          tmpNutrients[n] += nutrients[n]
         } else {
-          tmpNutrients[nutrient] = food.nutrients[nutrient]
+          tmpNutrients[n] = nutrients[n]
         }
       })
     })
@@ -40,11 +40,11 @@ class NutritionLabel extends Component {
   }
 
   // 9cals/fat, 4cals/prot, 4cals/carbs
-  getCalories = () => {
+  getCalories = (calculatedNutrients) => {
     return Math.ceil(
-      this.state.nutrients.totalFats * 9 +
-      this.state.nutrients.totalProtiens * 4 +
-      this.state.nutrients.totalCarbs * 4
+      calculatedNutrients.totalFats * 9 +
+      calculatedNutrients.totalProtiens * 4 +
+      calculatedNutrients.totalCarbs * 4
     );
   }
 
@@ -72,6 +72,7 @@ class NutritionLabel extends Component {
 
     const HR = this.HR
     const Nutrient = this.Nutrient
+    const calculatedNutrients = this.getAllNutrients(this.state.foods)
 
     return (
       <div className="NutritionLabel">
@@ -93,7 +94,7 @@ class NutritionLabel extends Component {
         <HR />
         <div className="calories-dlabel">
           <div className="calories">
-            <span>Calories {Math.ceil(this.getCalories() / this.state.serves)}</span>
+            <span>Calories {Math.ceil(this.getCalories(calculatedNutrients) / this.state.serves)}</span>
             <HR thick />
           </div>
           <span className="dpercent-label">% Daily Value*</span>
@@ -103,13 +104,13 @@ class NutritionLabel extends Component {
         {/* ===== FATS START ===== */}
         <div className="nutrient-breakdown">
           <div className="nutrient">
-            <Nutrient bold name="Fat" unit="g" value={this.state.nutrients.totalFats} />
+            <Nutrient bold name="Fat" unit="g" value={calculatedNutrients.totalFats} />
             <span className="dpercent">## %</span>
           </div>
           <div className="breakdown">
             <div className="breakdown__values">
-              <Nutrient name="Saturated" unit="g" value={this.state.nutrients.fattyAcids_satur_g} />
-              <Nutrient name="+ Trans" unit="g" value={this.state.nutrients.fattyAcids_trans_g}/>
+              <Nutrient name="Saturated" unit="g" value={calculatedNutrients.fattyAcids_satur_g} />
+              <Nutrient name="+ Trans" unit="g" value={calculatedNutrients.fattyAcids_trans_g}/>
             </div>
             <span className="dpercent">## %</span>
           </div>
@@ -122,33 +123,33 @@ class NutritionLabel extends Component {
         {/* ===== CARBS START ===== */}
         <div className="nutrient-breakdown">
           <div className="nutrient">
-            <Nutrient bold name="Carbohydrate" unit="g" value={this.state.nutrients.totalCarbs} />
+            <Nutrient bold name="Carbohydrate" unit="g" value={calculatedNutrients.totalCarbs} />
             <span className="dpercent">## %</span>
           </div>
           <div className="breakdown">
             <div className="breakdown__values">
-              <Nutrient name="Fibre" unit="g" value={this.state.nutrients.fiber_g} />
-              <Nutrient name="Sugar" unit="g" value={this.state.nutrients.totalSugars_g} />
+              <Nutrient name="Fibre" unit="g" value={calculatedNutrients.fiber_g} />
+              <Nutrient name="Sugar" unit="g" value={calculatedNutrients.totalSugars_g} />
             </div>
           </div>
         </div>
         {/* ===== CARBS END ===== */}
         <HR thin />
 
-        <Nutrient bold name="Protien" unit="g" value={this.state.nutrients.totalProtiens}/>
+        <Nutrient bold name="Protien" unit="g" value={calculatedNutrients.totalProtiens}/>
         <HR thin />
-        <Nutrient bold name="Cholesterol" unit="mg" value={this.state.nutrients.cholesterol_mg}/>
+        <Nutrient bold name="Cholesterol" unit="mg" value={calculatedNutrients.cholesterol_mg}/>
         <HR thin />
-        <Nutrient bold name="Sodium" unit="mg" value={this.state.nutrients.sodium_mg}/>
+        <Nutrient bold name="Sodium" unit="mg" value={calculatedNutrients.sodium_mg}/>
         <HR thick />
 
         
         {/* Nurtrients of Public Intrest */}
-        <Nutrient name="Potassium" unit="mg" value={this.state.nutrients.potassium_mg}/>
+        <Nutrient name="Potassium" unit="mg" value={calculatedNutrients.potassium_mg}/>
         <HR thin />
-        <Nutrient name="Calcium" unit="mg" value={this.state.nutrients.calcium_mg}/>
+        <Nutrient name="Calcium" unit="mg" value={calculatedNutrients.calcium_mg}/>
         <HR thin />
-        <Nutrient name="Iron" unit="mg" value={this.state.nutrients.iron_mg}/>
+        <Nutrient name="Iron" unit="mg" value={calculatedNutrients.iron_mg}/>
         <HR thick />
 
         {/* Daily Value Footnote */}

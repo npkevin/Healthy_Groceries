@@ -68,11 +68,10 @@ class Food extends Component {
 
     const multiplier = weightAsGrams / this.state.servingWeight.g
 
-    let nutrients = {
-      totalCarbs : this.state.nutrients.totalCarbs * multiplier,
-      totalFats : this.state.nutrients.totalFats * multiplier,
-      totalProtiens : this.state.nutrients.totalProtiens * multiplier,
-    }
+    let nutrients = {}
+    Object.keys(this.state.nutrients).forEach( n => {
+      nutrients[n] = this.state.nutrients[n] * multiplier
+    })
 
     this.setState({
       user_weight: new_weight,
