@@ -71,7 +71,7 @@ class RecipeCard extends Component {
 
   onSearchResult = (result) => {
     if (result.status === "ok") {
-      console.log(result.message)
+      // console.log(result.message)
       // common OR/AND branded
       this.setState({ searchResult: result.message })
     } else {
@@ -138,6 +138,7 @@ class RecipeCard extends Component {
                 </>
               }
             </div>
+            <div className="content">
             {/* =========================
             FOOD/INGREDIENT LIST
             ============================= */}
@@ -154,6 +155,7 @@ class RecipeCard extends Component {
                 })}
               </ul>
               : null}
+            </div>
             {/* ===============================
             TOGGABLE FOOD/INGREDIENT SEARCH 
             =================================== */}
@@ -193,12 +195,16 @@ class RecipeCard extends Component {
               <span className="label">Nutrients</span>
               <List className="button" onClick={() => this.setState({ flipped: false })} />
             </div>
+            <div className="content">
             {/* ==============
             NUTRIENTS
             ================== */}
             {this.state.chartjs !== null ?
               <>
-                <NutritionLabel>{this.state.foods}</NutritionLabel>
+                <span style={{fontSize: "0.8rem"}}>* all values are rounded up</span>
+                <NutritionLabel langToggle>
+                  {this.state.foods}
+                </NutritionLabel>
                 <Pie data={this.state.chartjs.data} options={this.state.chartjs.options} />
               </>
               :
@@ -207,6 +213,7 @@ class RecipeCard extends Component {
                 <span>Please add some ingredients first</span>
               </div>
             }
+            </div>
           </div>
         </div>
       </div>

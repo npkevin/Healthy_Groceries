@@ -2,19 +2,19 @@
     display: flex;
     flex-direction: column;
     border: 1px solid black;
-    padding: 4px;
-    margin: 0 0.5rem;
+    padding: 0.2em;
+    /* margin: 0 0.5em; */
 }
 
 .NutritionLabel h1 {
     margin: 0;
-    font-size: 2rem;
+    font-size: 2em;
 }
 
 
 .calories-dlabel {
     display: flex;
-
+    margin-top: 0.2em;
 }
 
 .dpercent-label {
@@ -22,17 +22,17 @@
     flex-grow: 1;
     align-items: flex-end;
     justify-content: flex-end;
-    font-size: 0.8rem;
+    font-size: 0.8em;
     font-weight: bold;
 }
 
 .calories {
-    font-size: 1.6rem;
+    font-size: 1.6em;
     font-weight: bold;
 }
 
 .nutrient-breakdown {
-    margin-top: 0.3rem;
+    margin-top: 0.3em;
     display: flex;
     flex-direction: column;
 }
@@ -43,7 +43,7 @@
 
 .breakdown {
     display: flex;
-    margin-left: 1rem;
+    margin-left: 1em;
 }
 
 .breakdown__values{
@@ -62,30 +62,72 @@
     text-align: right;
 }
 
+.serving-size {
+    display: flex;
+    align-items: center;
+}
+.serving-size .text{
+    margin-left: 0.4em;
+} 
+
+.serving-size .value {
+    background-color: #fbc531;
+    height: 1.4rem;
+    width: 2rem;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff;
+    user-select: none;
+}
+
+.serving-size .valbtn-plus,
+.serving-size .valbtn-minus {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 1.4rem;
+    width: 1.4rem;
+    background-color: #e1b12c;
+    color: #fff;
+    border: none;
+    border-radius: 0.6em;
+    cursor: pointer;
+}
+
+.serving-size .valbtn-plus {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.serving-size .valbtn-minus {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
 .bling-toggle {
     float: right;
     background: #bdc3c7;
-    padding: 0.1rem 0.5rem;
-    border-radius: 1rem;
+    padding: 0.1em 0.5em;
+    border-radius: 1em;
     cursor: pointer;
     user-select: none;
 }
 
-.NutritionLabel hr {
+.HR {
     background-color: #000;
     height: 2px;
-    margin: 2px 0 0 0;
-    border: none;
+    margin-top: 2px;
 }
 
-.NutritionLabel hr.thin {
+.HR--thin {
     height: 1px;
 }
 
-.NutritionLabel hr.thick {
+.HR--thick {
     height: 4px;
 }
 
-.NutritionLabel hr.light {
+.HR .light {
     background-color: rgb(180, 180, 180);
 }
