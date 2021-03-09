@@ -65,6 +65,7 @@
 .serving-size {
     display: flex;
     align-items: center;
+    margin-bottom: 0.2em;
 }
 .serving-size .text{
     margin-left: 0.4em;

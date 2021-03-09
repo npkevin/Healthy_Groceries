@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import './RecipeCard.css';
 
-import { Pie } from 'react-chartjs-2';
 import { PieChart, List, Plus, PlusCircle, Edit3, X, Check } from 'react-feather';
 import Food from '../Food/Food'
 import NutritionLabel from '../Food/NutritionLabel'
 import FoodSearch from '../Food/FoodSearch';
 import NIXFood from '../Food/NutritionixAPI/NIXFood';
+import MacroRatio from './MacroRatio'
 
 
 class RecipeCard extends Component {
@@ -51,7 +51,6 @@ class RecipeCard extends Component {
   }
 
   flipToBack = () => {
-    if (this.state.foods.length > 0) this.updateChartjsData();
     this.setState({ flipped: true });
   }
 
@@ -79,40 +78,21 @@ class RecipeCard extends Component {
     }
   }
 
-  updateChartjsData = () => {
+  getMacros = () => {
     // [fats, prot, carbs]
-    let totalMacros = [0, 0, 0]
+    let totalMacros = {f: 0, c: 0, p: 0}
 
     // Each food is an NIXFood
     this.state.foods.forEach(food => {
-      totalMacros[0] += food.user ? food.user.nutrients.totalFats : food.nutrients.totalFats;
-      totalMacros[1] += food.user ? food.user.nutrients.totalProtiens : food.nutrients.totalProtiens;
-      totalMacros[2] += food.user ? food.user.nutrients.totalCarbs : food.nutrients.totalCarbs;
+      totalMacros.f += food.user ? food.user.nutrients.totalFats : food.nutrients.totalFats;
+      totalMacros.p += food.user ? food.user.nutrients.totalProtiens : food.nutrients.totalProtiens;
+      totalMacros.c += food.user ? food.user.nutrients.totalCarbs : food.nutrients.totalCarbs;
     })
-
-    this.setState({
-      chartjs: {
-        data: {
-          labels: ['Fats', 'Protiens', 'Carbs'],
-          datasets: [{
-            data: totalMacros.map(macro => macro.toFixed(2)),
-            backgroundColor: ['#f1c40f', '#e74c3c', '#3498db'],
-          }],
-        },
-        options: {
-          legend: {
-            labels: {
-              // boxWidth: 12,
-              fontFamily: "'Nunito', sans-serif",
-              // usePointStyle: true,
-            }
-          }
-        }
-      }
-    })
+    return totalMacros
   }
 
   render = () => {
+    const macros = this.getMacros();
     return (
       <div className="RecipeCard-Container">
         <div className={"RecipeCard" + (this.state.flipped ? " flipped" : "")}>
@@ -199,16 +179,16 @@ class RecipeCard extends Component {
             {/* ==============
             NUTRIENTS
             ================== */}
-            {this.state.chartjs !== null ?
+            {this.state.foods.length > 0 ?
               <>
-                <span style={{fontSize: "0.8rem"}}>* all values are rounded up</span>
+                {/* <span style={{fontSize: "0.8rem"}}>* all values are rounded up</span> */}
+                <MacroRatio ratio={macros} />
                 <NutritionLabel langToggle>
                   {this.state.foods}
                 </NutritionLabel>
-                <Pie data={this.state.chartjs.data} options={this.state.chartjs.options} />
               </>
               :
-              <div className="chartjs-no-data">
+              <div className="no-data">
                 <span>No nutritional information to show</span>
                 <span>Please add some ingredients first</span>
               </div>

@@ -1,0 +1,17 @@
+.NL__totalCarbs,
+.NL__totalFats,
+.NL__totalProtiens {
+    transition: 0.3s;
+}
+
+.NL__totalCarbs:hover {
+    color: #3498db;
+}
+
+.NL__totalFats:hover {
+    color: #f1c40f;
+}
+
+.NL__totalProtiens:hover {
+    color: #e74c3c;
+}

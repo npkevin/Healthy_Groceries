@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './NutritionLabel.css'
+import './NutritionLabel-custom.css'
 
 
 // Follows https://www.inspection.gc.ca/food-label-requirements/labelling/industry/nutrition-labelling/nutrition-facts-table-formats/eng/1389209684841/1389210023155?chap=0#s2c2
@@ -60,7 +61,7 @@ class NutritionLabel extends Component {
   // props: bold, name, value, unit
   Nutrient = (props) => {
     return (
-      <span>
+      <span className={props.className}>
         <span style={props.bold ? {fontWeight: "bold"} : null}>{props.name} </span>
         {props.value ? Math.ceil(props.value / this.state.serves) : 0} {props.unit}
       </span>
@@ -102,7 +103,7 @@ class NutritionLabel extends Component {
 
 
         {/* ===== FATS START ===== */}
-        <div className="nutrient-breakdown">
+        <div className="nutrient-breakdown NL__totalFats">
           <div className="nutrient">
             <Nutrient bold name="Fat" unit="g" value={calculatedNutrients.totalFats} />
             <span className="dpercent">## %</span>
@@ -121,7 +122,7 @@ class NutritionLabel extends Component {
 
 
         {/* ===== CARBS START ===== */}
-        <div className="nutrient-breakdown">
+        <div className="nutrient-breakdown NL__totalCarbs">
           <div className="nutrient">
             <Nutrient bold name="Carbohydrate" unit="g" value={calculatedNutrients.totalCarbs} />
             <span className="dpercent">## %</span>
@@ -136,7 +137,7 @@ class NutritionLabel extends Component {
         {/* ===== CARBS END ===== */}
         <HR thin />
 
-        <Nutrient bold name="Protien" unit="g" value={calculatedNutrients.totalProtiens}/>
+        <Nutrient className="NL__totalProtiens" bold name="Protien" unit="g" value={calculatedNutrients.totalProtiens}/>
         <HR thin />
         <Nutrient bold name="Cholesterol" unit="mg" value={calculatedNutrients.cholesterol_mg}/>
         <HR thin />
