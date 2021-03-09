@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Trash2 } from 'react-feather';
 
 class Food extends Component {
 
@@ -44,7 +45,7 @@ class Food extends Component {
       conv_val = Math.round(conv_val + 0.1);
     else
       conv_val = conv_val.toFixed(2);
-    
+
     return conv_val
   }
 
@@ -52,7 +53,7 @@ class Food extends Component {
     const cur_unit = this.state.user_unit
     const weight = this.state.user_weight;
     const conv_val = this.convert(weight, cur_unit, new_unit);
-    
+
     this.setState({
       user_unit: new_unit,
       user_weight: conv_val,
@@ -69,7 +70,7 @@ class Food extends Component {
     const multiplier = weightAsGrams / this.state.servingWeight.g
 
     let nutrients = {}
-    Object.keys(this.state.nutrients).forEach( n => {
+    Object.keys(this.state.nutrients).forEach(n => {
       nutrients[n] = this.state.nutrients[n] * multiplier
     })
 
@@ -86,13 +87,15 @@ class Food extends Component {
 
   }
 
+
+
   render = () => {
-    return (
+    return this.props.as === "li" ?
       <li className={this.props.className}>
         <div className="weight">
           <input type="number"
             value={this.state.user_weight}
-            onChange={ e => this.weightChange(e.target.value)}
+            onChange={e => this.weightChange(e.target.value)}
           />
           <select defaultValue={this.state.user_unit} onChange={e => this.unitChange(e.target.value)}>
             <option value="gram">g</option>
@@ -100,10 +103,13 @@ class Food extends Component {
             <option value="ounce">oz</option>
           </select>
         </div>
-        <img src={this.state.photo.thumb} alt="thumbnail"/>
+        <img src={this.state.photo.thumb} alt="thumbnail" />
         <div className="name">{this.state.displayName}</div>
+        <div className={"delete-food " + (this.props.edit ? "" : "hide")} onClick={this.props.deleteSelf}>
+          <Trash2 />
+        </div>
       </li>
-    )
+      : null
   }
 }
 

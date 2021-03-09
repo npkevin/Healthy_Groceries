@@ -46,6 +46,14 @@ class RecipeCard extends Component {
     this.setState({ foods: foodArr })
   }
 
+  deleteFood = (index) => {
+    let arrayCopy = this.state.foods
+    arrayCopy.splice(index, 1)
+    this.setState({
+      foods: arrayCopy
+    })
+  }
+
   clearAllFoods = () => {
     this.setState({ food: [] })
   }
@@ -127,10 +135,13 @@ class RecipeCard extends Component {
                 {this.state.foods.map((food, index) => {
                   return (<Food
                     className="Food"
+                    edit={this.state.editable}
                     food={food}
+                    as="li"
                     key={food.item.id + "_" + index}
                     index={index}
                     updateSelf={this.updateFoodUserData}
+                    deleteSelf={() => this.deleteFood(index)}
                   />)
                 })}
               </ul>
