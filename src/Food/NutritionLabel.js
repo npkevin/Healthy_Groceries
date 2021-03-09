@@ -75,22 +75,36 @@ class NutritionLabel extends Component {
     const Nutrient = this.Nutrient
     const calculatedNutrients = this.getAllNutrients(this.state.foods)
 
+    // Eng/Fre translations
+    const tittle_phrase = this.state.lang_fr ? "Valeur nutritive" : "Nutrition Facts"
+    const servings_phrase = this.state.lang_fr ? "portions par recette" : "servings per recipe"
+    const dailyval_phrase = this.state.lang_fr ? "valeur quotidienne" : "Daily Value"
+    const fat_phrase = this.state.lang_fr ? "Lapides" : "Fat"
+    const satur_phrase = this.state.lang_fr ? "saturés" : "Saturated"
+    const trans_phrase = this.state.lang_fr ? "+ trans" : "+ Trans"
+    const carb_phrase = this.state.lang_fr ? "Glucides" : "Carbohydrate"
+    const fibre_phrase = this.state.lang_fr ? "Fibres" : "Fibre"
+    const sugar_phrase = this.state.lang_fr ? "Sucres" : "Sugars"
+    const protien_phrase = this.state.lang_fr ? "Protéines" : "Protien"
+    const cholest_phrase = this.state.lang_fr ? "Cholestérol" : "Cholesterol"
+    const iron_phrase = this.state.lang_fr ? "Fer" : "Iron"
+
     return (
       <div className="NutritionLabel">
-        <div className="header" onClick={() => console.log(this.state)}>
+        <div className="header">
           {this.props.langToggle ?
             <div className="bling-toggle" onClick={() => this.setState({ lang_fr: !this.state.lang_fr })}>
-              <span className="bling-toggle__en" style={this.state.lang_fr ? null : { fontWeight: "bold" }}>EN</span>/
-              <span className="bling-toggle__fr" style={this.state.lang_fr ? { fontWeight: "bold" } : null}>FR</span>
+              <span className="bling-toggle__en" style={this.state.lang_fr ? null : { textDecoration: "underline" }}>EN</span>/
+              <span className="bling-toggle__fr" style={this.state.lang_fr ? { textDecoration: "underline" } : null}>FR</span>
             </div>
             : null}
-          <h1>Nutrition Facts</h1>
+          <h1>{tittle_phrase}</h1>
         </div>
         <div className="serving-size">
           <button className="valbtn-minus" onClick={() => this.incrementServes(-1)}>-</button>
           <span className="value">{this.state.serves}</span>
           <button className="valbtn-plus" onClick={() => this.incrementServes(1)}>+</button>
-          <span className="text"> servings per recipe</span>
+          <span className="text"> {servings_phrase}</span>
         </div>
         <HR />
         <div className="calories-dlabel">
@@ -98,20 +112,20 @@ class NutritionLabel extends Component {
             <span>Calories {Math.ceil(this.getCalories(calculatedNutrients) / this.state.serves)}</span>
             <HR thick />
           </div>
-          <span className="dpercent-label">% Daily Value*</span>
+          <span className="dpercent-label">% {dailyval_phrase}*</span>
         </div>
 
 
         {/* ===== FATS START ===== */}
         <div className="nutrient-breakdown NL__totalFats">
           <div className="nutrient">
-            <Nutrient bold name="Fat" unit="g" value={calculatedNutrients.totalFats} />
+            <Nutrient bold name={fat_phrase} unit="g" value={calculatedNutrients.totalFats} />
             <span className="dpercent">## %</span>
           </div>
           <div className="breakdown">
             <div className="breakdown__values">
-              <Nutrient name="Saturated" unit="g" value={calculatedNutrients.fattyAcids_satur_g} />
-              <Nutrient name="+ Trans" unit="g" value={calculatedNutrients.fattyAcids_trans_g}/>
+              <Nutrient name={satur_phrase} unit="g" value={calculatedNutrients.fattyAcids_satur_g} />
+              <Nutrient name={trans_phrase} unit="g" value={calculatedNutrients.fattyAcids_trans_g}/>
             </div>
             <span className="dpercent">## %</span>
           </div>
@@ -124,22 +138,22 @@ class NutritionLabel extends Component {
         {/* ===== CARBS START ===== */}
         <div className="nutrient-breakdown NL__totalCarbs">
           <div className="nutrient">
-            <Nutrient bold name="Carbohydrate" unit="g" value={calculatedNutrients.totalCarbs} />
+            <Nutrient bold name={carb_phrase} unit="g" value={calculatedNutrients.totalCarbs} />
             <span className="dpercent">## %</span>
           </div>
           <div className="breakdown">
             <div className="breakdown__values">
-              <Nutrient name="Fibre" unit="g" value={calculatedNutrients.fiber_g} />
-              <Nutrient name="Sugar" unit="g" value={calculatedNutrients.totalSugars_g} />
+              <Nutrient name={fibre_phrase} unit="g" value={calculatedNutrients.fiber_g} />
+              <Nutrient name={sugar_phrase} unit="g" value={calculatedNutrients.totalSugars_g} />
             </div>
           </div>
         </div>
         {/* ===== CARBS END ===== */}
         <HR thin />
 
-        <Nutrient className="NL__totalProtiens" bold name="Protien" unit="g" value={calculatedNutrients.totalProtiens}/>
+        <Nutrient className="NL__totalProtiens" bold name={protien_phrase} unit="g" value={calculatedNutrients.totalProtiens}/>
         <HR thin />
-        <Nutrient bold name="Cholesterol" unit="mg" value={calculatedNutrients.cholesterol_mg}/>
+        <Nutrient bold name={cholest_phrase} unit="mg" value={calculatedNutrients.cholesterol_mg}/>
         <HR thin />
         <Nutrient bold name="Sodium" unit="mg" value={calculatedNutrients.sodium_mg}/>
         <HR thick />
@@ -150,15 +164,24 @@ class NutritionLabel extends Component {
         <HR thin />
         <Nutrient name="Calcium" unit="mg" value={calculatedNutrients.calcium_mg}/>
         <HR thin />
-        <Nutrient name="Iron" unit="mg" value={calculatedNutrients.iron_mg}/>
+        <Nutrient name={iron_phrase} unit="mg" value={calculatedNutrients.iron_mg}/>
         <HR thick />
 
         {/* Daily Value Footnote */}
+        {this.state.lang_fr ?
+        <span style={{ fontSize: "0.8rem" }}>
+          <span style={{ fontWeight: "bold" }}>*</span> 5% ou moins c'est
+          <span style={{ fontWeight: "bold" }}> peu</span>, 15% ou plus c'est
+          <span style={{ fontWeight: "bold" }}> beaucoup</span>
+        </span>
+        :
         <span style={{ fontSize: "0.8rem" }}>
           <span style={{ fontWeight: "bold" }}>*</span> 5% or less is
           <span style={{ fontWeight: "bold" }}> a little</span>, 15% or more is
           <span style={{ fontWeight: "bold" }}> a lot</span>
         </span>
+        }
+        
       </div>
     )
   }

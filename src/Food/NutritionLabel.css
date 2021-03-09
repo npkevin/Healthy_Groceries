@@ -92,7 +92,7 @@
     background-color: #e1b12c;
     color: #fff;
     border: none;
-    border-radius: 0.6em;
+    border-radius: 0.8em;
     cursor: pointer;
 }
 
@@ -108,11 +108,14 @@
 
 .bling-toggle {
     float: right;
-    background: #bdc3c7;
+    position: relative;
+    top: 0.2em;
+    right: 0.2em;
+    background: #ced2d4;
     padding: 0.1em 0.5em;
-    border-radius: 1em;
-    cursor: pointer;
+    border-radius: 0.8em;
     user-select: none;
+    cursor: pointer;
 }
 
 .HR {
