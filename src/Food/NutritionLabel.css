@@ -31,19 +31,14 @@
     font-weight: bold;
 }
 
-.nutrient-breakdown {
-    margin-top: 0.3em;
-    display: flex;
-    flex-direction: column;
-}
-
 .nutrient {
-    display: flex;
+    margin: 1px 0;
 }
 
 .breakdown {
     display: flex;
     margin-left: 1em;
+    align-items: center;
 }
 
 .breakdown__values{
@@ -51,15 +46,11 @@
     flex-direction: column;
 }
 
-.breakdown .dpercent{
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-
+/* float: right & text-align: right] on purpose */
 .dpercent {
     flex-grow: 1;
     text-align: right;
+    float: right;
 }
 
 .serving-size {
@@ -72,10 +63,10 @@
 } 
 
 .serving-size .value {
-    background-color: #fbc531;
-    height: 1.4rem;
-    width: 2rem;
     text-align: center;
+    background-color: #fbc531;
+    height: 1.5rem;
+    width: 2.5em;
     font-size: 1.2rem;
     font-weight: bold;
     color: #fff;
@@ -87,12 +78,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 1.4rem;
-    width: 1.4rem;
+    height: 1.5rem;
+    width: 2rem;
     background-color: #e1b12c;
     color: #fff;
     border: none;
-    border-radius: 0.8em;
+    border-radius: 0.5rem;
     cursor: pointer;
 }
 
@@ -111,17 +102,20 @@
     position: relative;
     top: 0.2em;
     right: 0.2em;
-    background: #ced2d4;
+    background: #cbcdce;
     padding: 0.1em 0.5em;
-    border-radius: 0.8em;
+    border-radius: 0.5em;
     user-select: none;
     cursor: pointer;
+}
+
+.bling-toggle .selected {
+    font-weight: bold;
 }
 
 .HR {
     background-color: #000;
     height: 2px;
-    margin-top: 2px;
 }
 
 .HR--thin {
@@ -132,6 +126,6 @@
     height: 4px;
 }
 
-.HR .light {
+.HR.light {
     background-color: rgb(180, 180, 180);
 }

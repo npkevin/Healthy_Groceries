@@ -6,12 +6,15 @@
 
 .NL__totalCarbs:hover {
     color: #3498db;
+    background-color: #cde3f1;
 }
 
 .NL__totalFats:hover {
-    color: #f1c40f;
+    color: #dbb20f;
+    background-color: #f5efda;
 }
 
 .NL__totalProtiens:hover {
     color: #e74c3c;
+    background-color: #f7e0de;
 }

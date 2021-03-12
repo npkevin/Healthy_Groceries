@@ -6,10 +6,9 @@ class Food extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      ...this.props.food,
-      user_weight: this.props.food.servingWeight.g,
       user_unit: "gram",
-      user_nutri: this.props.food.nutrients,
+      user_weight: this.props.measure.weight_g,
+      user_nutri: this.props.measure.nutrients,
     }
   }
 
@@ -51,12 +50,12 @@ class Food extends Component {
 
   unitChange = (new_unit) => {
     const cur_unit = this.state.user_unit
-    const weight = this.state.user_weight;
-    const conv_val = this.convert(weight, cur_unit, new_unit);
+    const cur_weight = this.state.user_weight;
+    const new_weight = this.convert(cur_weight, cur_unit, new_unit);
 
     this.setState({
       user_unit: new_unit,
-      user_weight: conv_val,
+      user_weight: new_weight,
     })
   }
 
@@ -67,30 +66,27 @@ class Food extends Component {
     if (this.state.user_unit !== "gram")
       weightAsGrams = this.convert(new_weight, this.state.user_unit, "gram")
 
-    const multiplier = weightAsGrams / this.state.servingWeight.g
+    const factor = weightAsGrams / this.props.measure.weight_g
 
-    let nutrients = {}
-    Object.keys(this.state.nutrients).forEach(n => {
-      nutrients[n] = this.state.nutrients[n] * multiplier
-    })
+    let user_nutrients = {}
+    for (const [key, val] of Object.entries(this.props.measure.nutrients))
+      user_nutrients[key] = val * factor
 
     this.setState({
       user_weight: new_weight,
-      user_nutri: nutrients
+      user_nutri: user_nutrients
     })
 
-    this.props.updateSelf(this.props.index, {
+    this.props.setCustomMeasure({
       unit: this.state.user_unit,
       weight: new_weight,
-      nutrients: nutrients,
+      nutrients: user_nutrients,
     })
 
   }
 
-
-
   render = () => {
-    return this.props.as === "li" ?
+    return (
       <li className={this.props.className}>
         <div className="weight">
           <input type="number"
@@ -103,13 +99,13 @@ class Food extends Component {
             <option value="ounce">oz</option>
           </select>
         </div>
-        <img src={this.state.photo.thumb} alt="thumbnail" />
-        <div className="name">{this.state.displayName}</div>
+        <img src={this.props.thumbnail} alt="thumbnail" />
+        <div className="name">{this.props.name}</div>
         <div className={"delete-food " + (this.props.edit ? "" : "hide")} onClick={this.props.deleteSelf}>
           <Trash2 />
         </div>
       </li>
-      : null
+    )
   }
 }
 

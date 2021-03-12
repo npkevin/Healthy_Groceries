@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import './NutritionLabel.css'
 import './NutritionLabel-custom.css'
+import { ChevronDown, ChevronUp } from 'react-feather'
 
 
 // Follows https://www.inspection.gc.ca/food-label-requirements/labelling/industry/nutrition-labelling/nutrition-facts-table-formats/eng/1389209684841/1389210023155?chap=0#s2c2
 // Canadian Standard
-// TODO: french support
 class NutritionLabel extends Component {
 
   constructor(props) {
@@ -50,25 +50,24 @@ class NutritionLabel extends Component {
   }
 
   HR = (props) => {
-    let size = ""
-    if (props.thin) size = "HR--thin"
-    if (props.thick) size = "HR--thick"
+    const size = props.thin? "HR--thin " : props.thick? "HR--thick " : ""
+    const light = props.light? "light" : ""
     return (
-      <div className={"HR " + size} />
+      <div className={"HR " + size + light} />
     )
   }
 
   // props: bold, name, value, unit
   Nutrient = (props) => {
     return (
-      <span className={props.className}>
+      <span className={"nutrient " + (props.className ? props.className : "")}>
         <span style={props.bold ? {fontWeight: "bold"} : null}>{props.name} </span>
-        {props.value ? Math.ceil(props.value / this.state.serves) : 0} {props.unit}
+        <span>{props.value ? Math.ceil(props.value / this.state.serves) : 0} {props.unit}</span>
+        {props.dailyValue ? <span className="dpercent">{props.dailyValue} %</span> : null}
       </span>
     )
   }
 
-  // TODO: Complete bilingual support (en/fr)
   render = () => {
 
     const HR = this.HR
@@ -94,16 +93,16 @@ class NutritionLabel extends Component {
         <div className="header">
           {this.props.langToggle ?
             <div className="bling-toggle" onClick={() => this.setState({ lang_fr: !this.state.lang_fr })}>
-              <span className="bling-toggle__en" style={this.state.lang_fr ? null : { textDecoration: "underline" }}>EN</span>/
-              <span className="bling-toggle__fr" style={this.state.lang_fr ? { textDecoration: "underline" } : null}>FR</span>
+              <span className={"bling-toggle__en " + (this.state.lang_fr ? "" : " selected")}>EN</span>/
+              <span className={"bling-toggle__fr " + (this.state.lang_fr ? " selected" : "")}>FR</span>
             </div>
             : null}
           <h1>{tittle_phrase}</h1>
         </div>
         <div className="serving-size">
-          <button className="valbtn-minus" onClick={() => this.incrementServes(-1)}>-</button>
+          <button className="valbtn-minus" onClick={() => this.incrementServes(-1)}><ChevronDown /></button>
           <span className="value">{this.state.serves}</span>
-          <button className="valbtn-plus" onClick={() => this.incrementServes(1)}>+</button>
+          <button className="valbtn-plus" onClick={() => this.incrementServes(1)}><ChevronUp /></button>
           <span className="text"> {servings_phrase}</span>
         </div>
         <HR />
@@ -117,11 +116,8 @@ class NutritionLabel extends Component {
 
 
         {/* ===== FATS START ===== */}
-        <div className="nutrient-breakdown NL__totalFats">
-          <div className="nutrient">
-            <Nutrient bold name={fat_phrase} unit="g" value={calculatedNutrients.totalFats} />
-            <span className="dpercent">## %</span>
-          </div>
+        <div className="NL__totalFats">
+          <Nutrient bold name={fat_phrase} unit="g" value={calculatedNutrients.totalFats} dailyValue="##" />
           <div className="breakdown">
             <div className="breakdown__values">
               <Nutrient name={satur_phrase} unit="g" value={calculatedNutrients.fattyAcids_satur_g} />
@@ -136,11 +132,8 @@ class NutritionLabel extends Component {
 
 
         {/* ===== CARBS START ===== */}
-        <div className="nutrient-breakdown NL__totalCarbs">
-          <div className="nutrient">
-            <Nutrient bold name={carb_phrase} unit="g" value={calculatedNutrients.totalCarbs} />
-            <span className="dpercent">## %</span>
-          </div>
+        <div className="NL__totalCarbs">
+          <Nutrient bold name={carb_phrase} unit="g" value={calculatedNutrients.totalCarbs} dailyValue="##" />
           <div className="breakdown">
             <div className="breakdown__values">
               <Nutrient name={fibre_phrase} unit="g" value={calculatedNutrients.fiber_g} />

@@ -1,14 +1,10 @@
 // Helper Class for dealing with Nutritionix raw data
 class NIXFood {
-
-  // Class Variables
-  data = null
-
   constructor(food) {
     if (food.brand_name || food.brand_name_item_name || food.brand_type) {
-      this.data = this.cleanBrandedFood(food);
+      return this.cleanBrandedFood(food);
     } else {
-      this.data = this.cleanCommonFood(food);
+      return this.cleanCommonFood(food);
     }
   }
 
