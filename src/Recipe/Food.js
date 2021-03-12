@@ -6,9 +6,9 @@ class Food extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      user_unit: "gram",
-      user_weight: this.props.measure.weight_g,
-      user_nutri: this.props.measure.nutrients,
+      user_unit: this.props.measure.user? this.props.measure.user.unit : "gram",
+      user_weight: this.props.measure.user? this.props.measure.user.weight : this.props.measure.weight_g,
+      user_nutri: this.props.measure.user? this.props.measure.user.nutrients : this.props.measure.nutrients,
     }
   }
 
@@ -60,7 +60,7 @@ class Food extends Component {
   }
 
   // Calculates nutrients by comparing current-weight to original-weight (grams)
-  weightChange = (new_weight) => {
+  weightChange = (new_weight) => { 
     let weightAsGrams = new_weight
 
     if (this.state.user_unit !== "gram")
@@ -99,7 +99,7 @@ class Food extends Component {
             <option value="ounce">oz</option>
           </select>
         </div>
-        <img src={this.props.thumbnail} alt="thumbnail" />
+        <img src={this.props.thumbnail} alt="thumbnail"/>
         <div className="name">{this.props.name}</div>
         <div className={"delete-food " + (this.props.edit ? "" : "hide")} onClick={this.props.deleteSelf}>
           <Trash2 />

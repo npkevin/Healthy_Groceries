@@ -16,35 +16,26 @@ class RecipeCard extends Component {
     this.searchInputRef = React.createRef();
     this.state = {
       name: this.props.name,
-      key: this.props["card-key"],
+      foods: this.props.foods,
       flipped: false,
       editable: this.props.edit ? true : false,
       showSearch: false,
       searchResult: null,
-      foods: [],
     }
   }
 
+  // This updates parent's (RecipeView) state.cards[this.key].foods
+  // Aren't props supposed to be read-only?
   addFood = (food) => {
     const cleanedFood = new NIXFood(food)
-    console.log(cleanedFood)
     let foodsCopy = this.state.foods;
-    foodsCopy.push(cleanedFood);
+    foodsCopy.push(cleanedFood); // is it this line ???
     this.searchInputRef.current.clearSearch();
     this.setState({
       foods: foodsCopy,
       showSearch: false,
       searchResult: null,
     });
-  }
-
-  setCustomMeasures = (index, user_data) => {
-    let foodArr = this.state.foods;
-    foodArr[index] = {
-      ...this.state.foods[index],
-      user: user_data,
-    }
-    this.setState({ foods: foodArr })
   }
 
   deleteFood = (index) => {
@@ -54,19 +45,15 @@ class RecipeCard extends Component {
       foods: arrayCopy
     })
   }
-
+  
   clearAllFoods = () => {
     this.setState({ food: [] })
   }
 
-  flipToBack = () => {
-    this.setState({ flipped: true });
-  }
-
-  // TODO: add more than just updating names
   saveChanges = () => {
-    this.props.updateName(this.state.name, this.props.index)
-    this.setState({ editable: false })
+    if (this.state.name !== this.props.name) this.props.updateName(this.state.name)
+    // if (this.state.foods !== this.props.foods) this.props.updateFoods(this.state.foods)
+    if (this.state.editable) this.setState({ editable: false })
   }
 
   discardChanges = () => {
@@ -77,22 +64,36 @@ class RecipeCard extends Component {
     })
   }
 
+  // This updates parent's (RecipeView) state.cards[this.key].foods
+  // Aren't props supposed to be read-only?
+  setCustomMeasures = (index, user_data) => {
+    let foodArr = this.state.foods;
+    foodArr[index] = {
+      ...this.state.foods[index],
+      user: user_data,
+    }
+    this.setState({ foods: foodArr })
+  }
+
+  flipToBack = () => {
+    this.setState({ flipped: true });
+  }
+
   onSearchResult = (result) => {
     if (result.status === "ok") {
       this.setState({ searchResult: result.message })
-      console.log(result.message)
     } else {
       this.setState({ searchResult: null })
     }
   }
 
   cancelSearch = () => {
-    this.setState({showSearch: false, searchResult: null})
+    this.setState({ showSearch: false, searchResult: null })
   }
 
   getMacros = () => {
     // [fats, prot, carbs]
-    let totalMacros = {f: 0, c: 0, p: 0}
+    let totalMacros = { f: 0, c: 0, p: 0 }
 
     // Each food is an NIXFood
     this.state.foods.forEach(food => {
@@ -131,29 +132,30 @@ class RecipeCard extends Component {
               }
             </div>
             <div className="content">
-            {/* =========================
+              {/* =========================
             FOOD/INGREDIENT LIST
             ============================= */}
-            {this.state.foods.length > 0 ?
-              <ul className="RecipeCard__FoodList">
-                {this.state.foods.map((food, index) => {
-                  return (<Food
-                    edit={this.state.editable}
-                    className="Food"
-                    name={food.displayName}
-                    thumbnail={food.photo.thumb}
-                    measure={{
-                      nutrients: food.nutrients,
-                      weight_g: food.servingWeight.g
-                    }}
-                    setCustomMeasure={data => this.setCustomMeasures(index, data)}
-                    deleteSelf={() => this.deleteFood(index)}
-                    key={food.item.id + "_" + index}
-                    as="li"
-                  />)
-                })}
-              </ul>
-              : null}
+              {this.state.foods.length > 0 ?
+                <ul className="RecipeCard__FoodList">
+                  {this.state.foods.map((food, index) => {
+                    return (<Food
+                      edit={this.state.editable}
+                      className="Food"
+                      name={food.displayName}
+                      thumbnail={food.photo.thumb}
+                      measure={{
+                        nutrients: food.nutrients,
+                        weight_g: food.servingWeight.g,
+                        user: food.user? food.user : null,
+                      }}
+                      setCustomMeasure={data => this.setCustomMeasures(index, data)}
+                      deleteSelf={() => this.deleteFood(index)}
+                      key={food.item.id + "_" + index}
+                      as="li"
+                    />)
+                  })}
+                </ul>
+                : null}
             </div>
             {/* ====================
             SEARCH FOOD/INGREDIENT 
@@ -166,18 +168,18 @@ class RecipeCard extends Component {
               <div className="result-container">
                 {this.state.searchResult ? (
                   <>
-                  <ul className="result">
-                    {this.state.searchResult.common.map((food, index) => {
-                      return (
-                        <li key={"cfood_" + index} className="result__food" onClick={() => this.addFood(food)}>
-                          <img src={food.photo.thumb} alt=""/>
-                          <span>{NIXFood.capitalizeEachWord(food.food_name)}</span>
-                          <PlusCircle className="add" />
-                        </li>
-                      )
-                    })}
-                  </ul>
-                  <span className="attribution no-result">
+                    <ul className="result">
+                      {this.state.searchResult.common.map((food, index) => {
+                        return (
+                          <li key={"cfood_" + index} className="result__food" onClick={() => this.addFood(food)}>
+                            <img src={food.photo.thumb} alt="" />
+                            <span>{NIXFood.capitalizeEachWord(food.food_name)}</span>
+                            <PlusCircle className="add" />
+                          </li>
+                        )
+                      })}
+                    </ul>
+                    <span className="attribution no-result">
                       No more results
                     </span>
                   </>
@@ -195,23 +197,23 @@ class RecipeCard extends Component {
               <List className="button" onClick={() => this.setState({ flipped: false })} />
             </div>
             <div className="content">
-            {/* ==============
+              {/* ==============
             NUTRIENTS
             ================== */}
-            {this.state.foods.length > 0 ?
-              <>
-                <MacroRatio ratio={macros} />
-                <NutritionLabel langToggle>
-                  {this.state.foods}
-                </NutritionLabel>
-                <span style={{fontSize: "0.8rem"}}>* all values are rounded up</span>
-              </>
-              :
-              <div className="no-data">
-                <span>No nutritional information to show</span>
-                <span>Please add some ingredients first</span>
-              </div>
-            }
+              {this.state.foods.length > 0 ?
+                <>
+                  <MacroRatio ratio={macros} />
+                  <NutritionLabel langToggle>
+                    {this.state.foods}
+                  </NutritionLabel>
+                  <span style={{ fontSize: "0.8rem" }}>* all values are rounded up</span>
+                </>
+                :
+                <div className="no-data">
+                  <span>No nutritional information to show</span>
+                  <span>Please add some ingredients first</span>
+                </div>
+              }
             </div>
           </div>
         </div>
