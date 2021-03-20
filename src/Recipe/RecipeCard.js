@@ -9,7 +9,7 @@ import NIXFood from '../Food/NutritionixAPI/NIXFood';
 import MacroRatio from './MacroRatio'
 
 
-class RecipeCard extends Component {
+class recipeCard extends Component {
 
   constructor(props) {
     super(props);
@@ -107,46 +107,46 @@ class RecipeCard extends Component {
   render = () => {
     const macros = this.getMacros();
     return (
-      <div className="RecipeCard-Container">
-        <div className={"RecipeCard" + (this.state.flipped ? " flipped" : "")}>
-          <div className="front">
-            <div className="RecipeCard__navbar">
-              <List className="icon" />
+      <div className="recipeCard-Container">
+        <div className={"recipeCard" + (this.state.flipped ? " -flipped" : "")}>
+          <div className="recipeCard__front">
+            <div className="recipeCard__navbar">
+              <List className="recipeCard__navbar__icon" />
               {this.state.editable ?
                 <>
                   <input
-                    className="label edit"
+                    className="recipeCard__navbar__label -edit"
                     type="text" value={this.state.name}
                     onChange={e => this.setState({ name: e.target.value })}
                   />
-                  <Check className="button" onClick={this.saveChanges} />
-                  <X className="button" onClick={this.discardChanges} />
+                  <Check className="recipeCard__navbar__button" onClick={this.saveChanges} />
+                  <X className="recipeCard__navbar__button" onClick={this.discardChanges} />
                 </>
                 :
                 <>
-                  <span className="label" onClick={() => console.log(this.state.foods)}>{this.state.name}</span>
-                  <Edit3 className="button" onClick={() => this.setState({ editable: true })} />
-                  <PieChart className="button" onClick={this.flipToBack} />
-                  <Plus className="button" onClick={() => this.setState({ showSearch: true })} />
+                  <span className="recipeCard__navbar__label" onClick={() => console.log(this.state.foods)}>{this.state.name}</span>
+                  <Edit3 className="recipeCard__navbar__button" onClick={() => this.setState({ editable: true })} />
+                  <PieChart className="recipeCard__navbar__button" onClick={this.flipToBack} />
+                  <Plus className="recipeCard__navbar__button" onClick={() => this.setState({ showSearch: true })} />
                 </>
               }
             </div>
-            <div className="content">
+            <div className="recipeCard__content">
               {/* =========================
             FOOD/INGREDIENT LIST
             ============================= */}
               {this.state.foods.length > 0 ?
-                <ul className="RecipeCard__FoodList">
+                <ul className="recipeCard__foodList">
                   {this.state.foods.map((food, index) => {
                     return (<Food
                       edit={this.state.editable}
-                      className="Food"
+                      className="recipeCard__foodList__foodItem"
                       name={food.displayName}
                       thumbnail={food.photo.thumb}
                       measure={{
                         nutrients: food.nutrients,
                         weight_g: food.servingWeight.g,
-                        user: food.user? food.user : null,
+                        user: food.user? food.user : false,
                       }}
                       setCustomMeasure={data => this.setCustomMeasures(index, data)}
                       deleteSelf={() => this.deleteFood(index)}
@@ -157,15 +157,12 @@ class RecipeCard extends Component {
                 </ul>
                 : null}
             </div>
-            {/* ====================
-            SEARCH FOOD/INGREDIENT 
-            ======================== */}
-            <div className={"RecipeCard__Search" + (this.state.showSearch ? "" : " hide")}>
-              <div className="input-container">
-                <FoodSearch className="FoodSearch__input" onResult={res => this.onSearchResult(res)} ref={this.searchInputRef} />
-                <button onClick={this.cancelSearch} className="FoodSearch__btn"><X /></button>
+            <div className={"recipeCard__foodSearch " + (this.state.showSearch ? "" : "-hide ")}>
+              <div className="recipeCard__foodSearch__input">
+                <FoodSearch onResult={res => this.onSearchResult(res)} ref={this.searchInputRef} />
+                <button onClick={this.cancelSearch}><X /></button>
               </div>
-              <div className="result-container">
+              <div className="recipeCard__foodSearch__results">
                 {this.state.searchResult ? (
                   <>
                     <ul className="result">
@@ -190,13 +187,13 @@ class RecipeCard extends Component {
               </div>
             </div>
           </div>
-          <div className="back">
-            <div className="RecipeCard__navbar">
-              <PieChart className="icon" />
-              <span className="label">Nutrients</span>
-              <List className="button" onClick={() => this.setState({ flipped: false })} />
+          <div className="recipeCard__back">
+            <div className="recipeCard__navbar">
+              <PieChart className="recipeCard__navbar__icon" />
+              <span className="recipeCard__navbar__label">Nutrients</span>
+              <List className="recipeCard__navbar__button" onClick={() => this.setState({ flipped: false })} />
             </div>
-            <div className="content">
+            <div className="recipeCard__content">
               {/* ==============
             NUTRIENTS
             ================== */}
@@ -222,4 +219,4 @@ class RecipeCard extends Component {
   }
 }
 
-export default RecipeCard;
+export default recipeCard;

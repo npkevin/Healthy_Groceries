@@ -18,7 +18,7 @@ const MacroRatio = (props) => {
   }, [total, multiplier_f, multiplier_c, multiplier_p]);
 
   return (
-    <div ref={ref} className="MacroRatio">
+    <div ref={ref} className="macroRatio">
       <div className="MacroRatio__f" style={{width: width_f ? width_f : 0}}></div>
       <div className="MacroRatio__p" style={{width: width_p ? width_p : 0}}></div>
       <div className="MacroRatio__c" style={{width: width_c ? width_c : 0}}></div>

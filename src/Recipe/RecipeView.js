@@ -35,7 +35,7 @@ class RecipeView extends Component {
   render = () => {
     return (
       <>
-        <button onClick={() => console.log(this.state)}>RecipeView State</button>
+        <button onClick={() => console.log(this.state.cards)}>Card Objects</button>
         <Section className="RecipeView" name="Recipes" add={this.addCard}>
           {Object.keys(this.state.cards).length > 0 ?
             Object.keys(this.state.cards).map(cardKey => {
