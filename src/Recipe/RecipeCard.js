@@ -45,7 +45,7 @@ class recipeCard extends Component {
       foods: arrayCopy
     })
   }
-  
+
   clearAllFoods = () => {
     this.setState({ food: [] })
   }
@@ -146,7 +146,7 @@ class recipeCard extends Component {
                       measure={{
                         nutrients: food.nutrients,
                         weight_g: food.servingWeight.g,
-                        user: food.user? food.user : false,
+                        user: food.user ? food.user : false,
                       }}
                       setCustomMeasure={data => this.setCustomMeasures(index, data)}
                       deleteSelf={() => this.deleteFood(index)}
@@ -162,29 +162,38 @@ class recipeCard extends Component {
                 <FoodSearch onResult={res => this.onSearchResult(res)} ref={this.searchInputRef} />
                 <button onClick={this.cancelSearch}><X /></button>
               </div>
-              <div className="recipeCard__foodSearch__results">
+              <div className={"recipeCard__foodSearch__results " + (this.state.searchResult ? "" : "no-results")}>
                 {this.state.searchResult ? (
                   <>
                     <ul className="result">
                       {this.state.searchResult.common.map((food, index) => {
                         return (
-                          <li key={"cfood_" + index} className="result__food" onClick={() => this.addFood(food)}>
+                          <li key={"cfood_" + index} className="result__food common" onClick={() => this.addFood(food)}>
+                            <div className="type common"></div>
                             <img src={food.photo.thumb} alt="" />
                             <span>{NIXFood.capitalizeEachWord(food.food_name)}</span>
-                            <PlusCircle className="add" />
+                          </li>
+                        )
+                      })}
+                      {this.state.searchResult.branded.map((food, index) => {
+                        return (
+                          <li key={"bfood_" + index} className="result__food branded" onClick={() => this.addFood(food)}>
+                            <div className="type branded"></div>
+                            <img src={food.photo.thumb} alt="" />
+                            <span>{NIXFood.capitalizeEachWord(food.food_name)}</span>
                           </li>
                         )
                       })}
                     </ul>
-                    <span className="attribution no-result">
+                    {/* <span className="attribution error">
                       No more results
-                    </span>
+                    </span> */}
                   </>
                 ) : null}
-                <span className="attribution">
-                  Powered By Nutritionix
-                </span>
               </div>
+              {/* <span className="attribution">
+                Powered By Nutritionix
+              </span> */}
             </div>
           </div>
           <div className="recipeCard__back">
