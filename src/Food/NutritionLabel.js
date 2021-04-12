@@ -75,7 +75,6 @@ class NutritionLabel extends Component {
       tmpNutrients.calcium_mg += nutrients.calcium_mg / 1100
       tmpNutrients.iron_mg += nutrients.iron_mg / 14
     })
-    console.log(tmpNutrients)
     return tmpNutrients
   }
 

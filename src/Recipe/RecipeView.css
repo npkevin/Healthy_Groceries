@@ -5,9 +5,9 @@
     overflow-y: hidden;
 }
 
-.RecipeView::-webkit-scrollbar {
-    /* display: none; */
-}
+/* .RecipeView::-webkit-scrollbar {
+    display: none;
+} */
 
 
 
