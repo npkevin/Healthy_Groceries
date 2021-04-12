@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './RecipeCard.css';
 
-import { PieChart, List, Plus, PlusCircle, Edit3, X, Check } from 'react-feather';
+import { PieChart, List, Plus, Edit3, X, Check } from 'react-feather';
 import Food from './Food'
 import NutritionLabel from '../Food/NutritionLabel'
 import FoodSearch from '../Food/FoodSearch';

@@ -1,19 +1,8 @@
 .recipeCard-Container {
   display: inline-block;
-  background-color: transparent;
   -webkit-perspective: 80rem;
           perspective: 80rem;
-  scroll-snap-align: center;
-  margin-right: 2rem;
-}
-
-.recipeCard-Container:first-child {
-  scroll-margin-left: 50rem;
-}
-
-.recipeCard-Container:last-child {
-  scroll-margin-right: 50rem;
-  margin-right: 0;
+  margin: 1rem;
 }
 
 .recipeCard {

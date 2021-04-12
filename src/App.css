@@ -4,14 +4,11 @@
 }
 
 .section {
-    display: flex;
-    flex-grow: 1;
-    flex-direction: column;
-    padding: 0 0.5rem;
+    padding: 0.5rem;
 }
 
 .section .content-container {
-    padding: 1rem;
+    /* padding: 1rem; */
 }
 
 .section__label {
