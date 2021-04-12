@@ -48,6 +48,8 @@
 
 /* float: right & text-align: right] on purpose */
 .dpercent {
+    font-size: 0.8rem;
+    font-weight: bold;
     flex-grow: 1;
     text-align: right;
     float: right;
