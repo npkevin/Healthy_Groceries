@@ -65,16 +65,16 @@ class NutritionLabel extends Component {
     }
     foodArr.forEach(food => {
       const nutrients = food.user ? food.user.nutrients : food.nutrients
-      tmpNutrients.totalFats += nutrients.totalFats / 65
-      tmpNutrients.totalCarbs += nutrients.totalCarbs / 300
-      tmpNutrients.sattransfat_g += (nutrients.fattyAcids_satur_g + nutrients.fattyAcids_trans_g) / 20
-      tmpNutrients.cholesterol_mg += nutrients.cholesterol_mg / 300
-      tmpNutrients.sodium_mg += nutrients.sodium_mg / 2400
-      tmpNutrients.fiber_g += nutrients.fiber_g / 25
-      tmpNutrients.vataminA_re += nutrients.vitaminA_RAE_ug / 1000 // 1 ug RAE = 1 ug RE
-      tmpNutrients.vitaminC_mg += nutrients.vitaminC_mg / 60
-      tmpNutrients.calcium_mg += nutrients.calcium_mg / 1100
-      tmpNutrients.iron_mg += nutrients.iron_mg / 14
+      tmpNutrients.totalFats += (nutrients.totalFats ? nutrients.totalFats : 0) / 65
+      tmpNutrients.totalCarbs += (nutrients.totalCarbs ? nutrients.totalCarbs : 0) / 300
+      tmpNutrients.sattransfat_g += ((nutrients.fattyAcids_satur_g ? nutrients.fattyAcids_satur_g : 0) + (nutrients.fattyAcids_trans_g ? nutrients.fattyAcids_trans_g : 0)) / 20
+      tmpNutrients.cholesterol_mg += (nutrients.cholesterol_mg ? nutrients.cholesterol_mg : 0) / 300
+      tmpNutrients.sodium_mg += (nutrients.sodium_mg ? nutrients.sodium_mg : 0) / 2400
+      tmpNutrients.fiber_g += (nutrients.fiber_g ? nutrients.fiber_g : 0) / 25
+      tmpNutrients.vataminA_re += (nutrients.vitaminA_RAE_ug ? nutrients.vitaminA_RAE_ug : 0) / 1000 // 1 ug RAE = 1 ug RE
+      tmpNutrients.vitaminC_mg += (nutrients.vitaminC_mg ? nutrients.vitaminC_mg : 0) / 60
+      tmpNutrients.calcium_mg += (nutrients.calcium_mg ? nutrients.calcium_mg : 0) / 1100
+      tmpNutrients.iron_mg += (nutrients.iron_mg ? nutrients.iron_mg : 0) / 14
     })
     return tmpNutrients
   }
@@ -119,7 +119,7 @@ class NutritionLabel extends Component {
     const iron_phrase = this.state.lang_fr ? "Fer" : "Iron"
 
     return (
-      <div className="NutritionLabel">
+      <div className="NutritionLabel" onClick={() => console.log(this.state.foods)}>
         <div className="header">
           {this.props.langToggle ?
             <div className="bling-toggle" onClick={() => this.setState({ lang_fr: !this.state.lang_fr })}>
