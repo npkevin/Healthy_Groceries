@@ -12,7 +12,6 @@ class NutritionLabel extends Component {
     super(props)
     this.state = {
       // array of NIXFoods
-      foods: this.props.children,
       serves: this.props.serves ? this.props.serves : 1,
       lang_fr: false,
     }
@@ -31,25 +30,25 @@ class NutritionLabel extends Component {
       calculatedNutrients.totalFats * 9 +
       calculatedNutrients.totalProtiens * 4 +
       calculatedNutrients.totalCarbs * 4
-      );
-    }
+    );
+  }
 
-    // Sum/Merge all the nurients together
-    getAllNutrients = (foodArr) => {
-      let tmpNutrients = {}
-      foodArr.forEach(food => {
-        const nutrients = food.user ? food.user.nutrients : food.nutrients
-        Object.keys(nutrients).forEach(n => {
-          if (tmpNutrients.hasOwnProperty(n)) {
-            tmpNutrients[n] += nutrients[n]
-          } else {
-            tmpNutrients[n] = nutrients[n]
-          }
-        })
+  // Sum/Merge all the nurients together
+  getAllNutrients = (foodArr) => {
+    let tmpNutrients = {}
+    foodArr.forEach(food => {
+      const nutrients = food.user ? food.user.nutrients : food.nutrients
+      Object.keys(nutrients).forEach(n => {
+        if (tmpNutrients.hasOwnProperty(n)) {
+          tmpNutrients[n] += nutrients[n]
+        } else {
+          tmpNutrients[n] = nutrients[n]
+        }
       })
-      return tmpNutrients
-    }
-    
+    })
+    return tmpNutrients
+  }
+
   getDailyValue = (foodArr) => {
     let tmpNutrients = {
       totalFats: 0,
@@ -101,8 +100,8 @@ class NutritionLabel extends Component {
   render = () => {
     const HR = this.HR
     const Nutrient = this.Nutrient
-    const calculatedNutrients = this.getAllNutrients(this.state.foods)
-    const calculatedDailyValue = this.getDailyValue(this.state.foods)
+    const calculatedNutrients = this.getAllNutrients(this.props.foods)
+    const calculatedDailyValue = this.getDailyValue(this.props.foods)
 
     // Eng/Fre translations
     const tittle_phrase = this.state.lang_fr ? "Valeur nutritive" : "Nutrition Facts"
@@ -119,7 +118,7 @@ class NutritionLabel extends Component {
     const iron_phrase = this.state.lang_fr ? "Fer" : "Iron"
 
     return (
-      <div className="NutritionLabel">
+      <div className="NutritionLabel" onClick={() => console.log(this.props.foods)}>
         <div className="header">
           {this.props.langToggle ?
             <div className="bling-toggle" onClick={() => this.setState({ lang_fr: !this.state.lang_fr })}>

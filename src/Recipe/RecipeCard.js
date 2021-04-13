@@ -214,9 +214,11 @@ class recipeCard extends Component {
               {this.state.foods.length > 0 ?
                 <>
                   <MacroRatio ratio={macros} />
-                  <NutritionLabel serves={this.state.serves} updateServings={newVal => this.setState({ serves: newVal })} langToggle>
-                    {this.state.foods}
-                  </NutritionLabel>
+                  <NutritionLabel
+                    serves={this.state.serves}
+                    updateServings={newVal => this.setState({ serves: newVal })}
+                    foods={this.state.foods}
+                    langToggle />
                   <span style={{ fontSize: "0.8rem" }}>* all values are rounded up</span>
                 </>
                 :
