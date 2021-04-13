@@ -104,6 +104,8 @@
         background: rgba(0, 0, 0, 0.7);
         opacity: 0;
         transition: 0.2s;
+        border-radius: 0.4rem;
+        z-index: 1;
         visibility: hidden;
 
         &.--editable {
