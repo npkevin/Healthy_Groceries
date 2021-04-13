@@ -13,7 +13,7 @@ class NutritionLabel extends Component {
     this.state = {
       // array of NIXFoods
       foods: this.props.children,
-      serves: 1,
+      serves: this.props.serves ? this.props.serves : 1,
       lang_fr: false,
     }
   }
@@ -21,6 +21,7 @@ class NutritionLabel extends Component {
   incrementServes = (val) => {
     let newVal = this.state.serves + val
     if (newVal < 1) newVal = 1
+    this.props.updateServings(newVal)
     this.setState({ serves: newVal })
   }
 

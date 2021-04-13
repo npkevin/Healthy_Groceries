@@ -10,7 +10,12 @@ class RecipeView extends Component {
     super(props);
     this.state = {
       cards: {},
+      synched: false
     }
+  }
+
+  componentDidMount = () => {
+    this.loadState()
   }
 
   addCard = () => {
@@ -26,11 +31,11 @@ class RecipeView extends Component {
     this.setState({ cards: cardsCopy })
   }
 
-  updateCardName = (newName, cardKey) => {
-    console.log("Changing Card[" + cardKey + "] name to: " + newName)
+  updateCard = (newCard, cardKey) => {
+    console.log("Updating Card[" + cardKey + "]")
     let cardsCopy = this.state.cards
-    cardsCopy[cardKey].name = newName
-    this.setState({ cards: cardsCopy })
+    cardsCopy[cardKey] = newCard
+    this.setState({ cards: cardsCopy, synched: false })
   }
 
 
@@ -38,27 +43,32 @@ class RecipeView extends Component {
     const db = firebase.app().firestore()
     const state = this.state.cards
     db.collection('user-recipes').doc('guest').set(state)
+    this.setState({synched: true})
   }
 
   loadState = () => {
     const db = firebase.app().firestore()
     db.collection('user-recipes').doc('guest').get().then(query => {
-      this.setState({ cards: query.data() })
+      this.setState({ cards: query.data(), synched: true})
     })
   }
 
   render = () => {
     return (
       <>
-        <button onClick={this.saveState}>Save State</button>
-        <button onClick={this.loadState}>Load State</button>
-        <Section className="RecipeView" name="Recipes" add={this.addCard}>
+        <Section className="RecipeView" name="Recipes"
+          add={this.addCard}
+          synched={this.state.synched}
+          loadState={this.loadState}
+          saveState={this.saveState}
+        >
           {Object.keys(this.state.cards).length > 0 ?
             Object.keys(this.state.cards).sort().reverse().map(cardKey => {
               return <RecipeCard
                 name={this.state.cards[cardKey].name}
                 foods={this.state.cards[cardKey].foods}
-                updateName={newName => this.updateCardName(newName, cardKey)}
+                serves={this.state.cards[cardKey].serves}
+                updateCard={newCard => this.updateCard(newCard, cardKey)}
                 key={cardKey}
               />
             })

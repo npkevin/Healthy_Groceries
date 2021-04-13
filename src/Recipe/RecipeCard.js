@@ -17,6 +17,7 @@ class recipeCard extends Component {
     this.state = {
       name: this.props.name,
       foods: this.props.foods,
+      serves: this.props.serves,
       flipped: false,
       editable: this.props.edit ? true : false,
       showSearch: false,
@@ -24,12 +25,17 @@ class recipeCard extends Component {
     }
   }
 
-  // This updates parent's (RecipeView) state.cards[this.key].foods
-  // Aren't props supposed to be read-only?
+  componentDidUpdate = (prevProps, prevState) => {
+    let updateFlag = false
+    if (prevState.foods !== this.state.foods) updateFlag = true
+    if (prevState.serves !== this.state.serves) updateFlag = true
+    if (updateFlag) this.props.updateCard(this.state)
+  }
+
   addFood = (food) => {
     const cleanedFood = new NIXFood(food)
-    let foodsCopy = this.state.foods;
-    foodsCopy.push(cleanedFood); // is it this line ???
+    let foodsCopy = [...this.state.foods];
+    foodsCopy.push(cleanedFood);
     this.searchInputRef.current.clearSearch();
     this.setState({
       foods: foodsCopy,
@@ -39,21 +45,19 @@ class recipeCard extends Component {
   }
 
   deleteFood = (index) => {
-    let arrayCopy = this.state.foods
+    let arrayCopy = [...this.state.foods]
     arrayCopy.splice(index, 1)
     this.setState({
       foods: arrayCopy
     })
   }
 
-  clearAllFoods = () => {
-    this.setState({ food: [] })
-  }
-
-  saveChanges = () => {
-    if (this.state.name !== this.props.name) this.props.updateName(this.state.name)
-    // if (this.state.foods !== this.props.foods) this.props.updateFoods(this.state.foods)
-    if (this.state.editable) this.setState({ editable: false })
+  updateName = () => {
+    if (this.state.name !== this.props.name) {
+      console.log("Name Change Detected")
+      this.props.updateCard(this.state)
+    }
+    this.setState({ editable: false })
   }
 
   discardChanges = () => {
@@ -67,7 +71,7 @@ class recipeCard extends Component {
   // This updates parent's (RecipeView) state.cards[this.key].foods
   // Aren't props supposed to be read-only?
   setCustomMeasures = (index, user_data) => {
-    let foodArr = this.state.foods;
+    let foodArr = [...this.state.foods];
     foodArr[index] = {
       ...this.state.foods[index],
       user: user_data,
@@ -88,6 +92,7 @@ class recipeCard extends Component {
   }
 
   cancelSearch = () => {
+    this.searchInputRef.current.clearSearch();
     this.setState({ showSearch: false, searchResult: null })
   }
 
@@ -119,12 +124,12 @@ class recipeCard extends Component {
                     type="text" value={this.state.name}
                     onChange={e => this.setState({ name: e.target.value })}
                   />
-                  <Check className="recipeCard__navbar__button" onClick={this.saveChanges} />
+                  <Check className="recipeCard__navbar__button" onClick={this.updateName} />
                   <X className="recipeCard__navbar__button" onClick={this.discardChanges} />
                 </>
                 :
                 <>
-                  <span className="recipeCard__navbar__label" onClick={() => console.log(this.state.foods)}>{this.state.name}</span>
+                  <span className="recipeCard__navbar__label">{this.state.name}</span>
                   <Edit3 className="recipeCard__navbar__button" onClick={() => this.setState({ editable: true })} />
                   <PieChart className="recipeCard__navbar__button" onClick={this.flipToBack} />
                   <Plus className="recipeCard__navbar__button" onClick={() => this.setState({ showSearch: true })} />
@@ -148,7 +153,7 @@ class recipeCard extends Component {
                         weight_g: food.servingWeight.g,
                         user: food.user ? food.user : false,
                       }}
-                      setCustomMeasure={data => this.setCustomMeasures(index, data)}
+                      setCustomMeasure={user_data => this.setCustomMeasures(index, user_data)}
                       deleteSelf={() => this.deleteFood(index)}
                       key={food.item.id + "_" + index}
                       as="li"
@@ -209,7 +214,7 @@ class recipeCard extends Component {
               {this.state.foods.length > 0 ?
                 <>
                   <MacroRatio ratio={macros} />
-                  <NutritionLabel langToggle>
+                  <NutritionLabel serves={this.state.serves} updateServings={ newVal => this.setState({serves: newVal})} langToggle>
                     {this.state.foods}
                   </NutritionLabel>
                   <span style={{ fontSize: "0.8rem" }}>* all values are rounded up</span>

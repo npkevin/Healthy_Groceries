@@ -13,10 +13,11 @@
 
 .section__label {
     display: flex;
+    align-items: center;
 }
 
 .section__label #name {
-    flex-grow: 1;
+    /* flex-grow: 1; */
 }
 
 .section #divider {
@@ -24,8 +25,12 @@
     background: rgba(0, 0, 0, 0.2);
 }
 
+.item-adder-container {
+    flex-grow: 1;
+    text-align: end;
+}
+
 .item-adder {
-    align-self: center;
     cursor: pointer;
     color: #000;
     opacity: 35%;
@@ -35,4 +40,21 @@
 
 .item-adder:hover {
     opacity: 60%;
+}
+
+.btn-synched {
+    color: white;
+    font-weight: bold;
+    height: 1.6rem;
+    width: 6rem;
+    margin: 1rem;
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 0 0.4rem rgba(0, 0, 0, 0.3);
+    background: #f1c40f;
+    cursor: pointer;
+}
+
+.btn-synched.--synched {
+    background: #27ae60;
 }

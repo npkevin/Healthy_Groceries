@@ -6,7 +6,10 @@ const Section = (props) => {
     <div className="section">
       <div className="section__label">
         <h1 id="name">{props.name.toUpperCase()}</h1>
-        <PlusCircle className="item-adder" size="3rem" onClick={props.add} />
+        <button className={"btn-synched " + (props.synched ? "--synched " : "")} onClick={!props.synched ? props.saveState : null}>{props.synched ? "Saved" : "Changes"}</button>
+        <div className="item-adder-container">
+          <PlusCircle className="item-adder" size="3rem" onClick={props.add} />
+        </div>
       </div>
       <div id="divider" />
       <div className={"content-container " + props.className}>
