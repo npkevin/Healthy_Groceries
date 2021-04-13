@@ -119,7 +119,7 @@ class NutritionLabel extends Component {
     const iron_phrase = this.state.lang_fr ? "Fer" : "Iron"
 
     return (
-      <div className="NutritionLabel" onClick={() => console.log(this.state.foods)}>
+      <div className="NutritionLabel">
         <div className="header">
           {this.props.langToggle ?
             <div className="bling-toggle" onClick={() => this.setState({ lang_fr: !this.state.lang_fr })}>
