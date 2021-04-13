@@ -167,6 +167,7 @@ class recipeCard extends Component {
                 <FoodSearch onResult={res => this.onSearchResult(res)} ref={this.searchInputRef} />
                 <button onClick={this.cancelSearch}><X /></button>
               </div>
+              <span className="attribution">Powered By Nutritionix</span>
               <div className={"recipeCard__foodSearch__results " + (this.state.searchResult ? "" : "no-results")}>
                 {this.state.searchResult ? (
                   <>
@@ -190,15 +191,9 @@ class recipeCard extends Component {
                         )
                       })}
                     </ul>
-                    {/* <span className="attribution error">
-                      No more results
-                    </span> */}
                   </>
                 ) : null}
               </div>
-              {/* <span className="attribution">
-                Powered By Nutritionix
-              </span> */}
             </div>
           </div>
           <div className="recipeCard__back">

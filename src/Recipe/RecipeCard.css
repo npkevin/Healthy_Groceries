@@ -247,10 +247,9 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  margin: 0 1rem;
   position: relative;
-  top: -0.8rem;
-  border-top: 1rem solid white;
+  top: -3rem;
+  margin: 0 1rem -2rem 1rem;
   border-bottom-left-radius: 1rem;
   border-bottom-right-radius: 1rem;
   -webkit-box-shadow: 0 0 0.2rem #b4b4b4;
@@ -276,7 +275,6 @@
   font-size: 1rem;
   width: 100%;
   padding: 0;
-  padding-top: 0.3rem;
   margin: 0;
   background-color: #fff;
   list-style-type: none;
@@ -294,6 +292,10 @@
   border-bottom: 1px solid #d8d8d8;
   padding: 0.2rem 0.5rem;
   cursor: pointer;
+}
+
+.recipeCard__foodSearch__results .result__food:first-child {
+  padding-top: 1rem;
 }
 
 .recipeCard__foodSearch__results .result__food .type {
@@ -327,6 +329,21 @@
           flex-grow: 1;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.recipeCard__foodSearch .attribution {
+  color: #fff;
+  font-weight: bold;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  margin-top: 0.5rem;
+  border-radius: 1rem;
+  padding: 0.3rem 1rem;
+  background-color: #f1c40f;
 }
 
 .recipeCard__foodSearch__results.no-results {
@@ -505,18 +522,6 @@
 .no-data span {
   position: relative;
   bottom: 2em;
-}
-
-.attribution {
-  color: #fff;
-  font-weight: bold;
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
-  margin-top: 0.5rem;
-  border-radius: 1rem;
-  padding: 0.3rem 1rem;
-  background-color: #f1c40f;
 }
 
 .error {
