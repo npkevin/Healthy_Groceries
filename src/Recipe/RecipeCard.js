@@ -110,6 +110,9 @@ class recipeCard extends Component {
     const macros = this.getMacros();
     return (
       <div className="recipeCard-Container">
+        <div className={"recipeCard__deleteOverlay " + (this.props.editable ? "--editable " : "")}>
+          <Trash2 className="recipeCard__deleteOverlay__delbutton" size="10rem" onClick={this.props.deleteSelf} />
+        </div>
         <div className={"recipeCard" + (this.state.flipped ? " -flipped" : "")}>
           <div className="recipeCard__front">
             <div className="recipeCard__navbar">
@@ -224,9 +227,6 @@ class recipeCard extends Component {
               }
             </div>
           </div>
-        </div>
-        <div className={"recipeCard__deleteOverlay " + (this.props.editable ? "--editable " : "")}>
-          <Trash2 className="recipeCard__deleteOverlay__delbutton" size="10rem" onClick={this.props.deleteSelf} />
         </div>
       </div>
     )

@@ -102,15 +102,15 @@
         width: 100%;
         height: 100%;
         background: rgba(0, 0, 0, 0.7);
+        border-radius: 0.4rem;
         opacity: 0;
         transition: 0.2s;
-        border-radius: 0.4rem;
         z-index: 1;
         visibility: hidden;
 
         &.--editable {
             display: flex;
-            visibility: initial;
+            visibility: visible;
             opacity: 100%;
         }
 
