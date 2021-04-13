@@ -197,9 +197,6 @@ class recipeCard extends Component {
                 Powered By Nutritionix
               </span> */}
             </div>
-            <div className={"recipeCard__deleteOverlay " + (this.props.editable ? "--editable " : "")}>
-              <Trash2 className="recipeCard__deleteOverlay__delbutton" size="10rem" onClick={this.props.deleteSelf} />
-            </div>
           </div>
           <div className="recipeCard__back">
             <div className="recipeCard__navbar">
@@ -227,6 +224,9 @@ class recipeCard extends Component {
               }
             </div>
           </div>
+        </div>
+        <div className={"recipeCard__deleteOverlay " + (this.props.editable ? "--editable " : "")}>
+          <Trash2 className="recipeCard__deleteOverlay__delbutton" size="10rem" onClick={this.props.deleteSelf} />
         </div>
       </div>
     )
