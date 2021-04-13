@@ -1,7 +1,7 @@
 .recipeCard-Container {
     display: inline-block;
     perspective: 80rem;
-    margin: 1rem;
+    margin: 1rem 1.2rem 0 0;
 }
 
 .recipeCard {
@@ -91,6 +91,36 @@
 
         &::-webkit-scrollbar {
             display: none;
+        }
+    }
+
+    &__deleteOverlay {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        opacity: 0;
+        transition: 0.2s;
+        visibility: hidden;
+
+        &.--editable {
+            display: flex;
+            visibility: initial;
+            opacity: 100%;
+        }
+
+        &__delbutton {
+            cursor: pointer;
+            background: #c0392b;
+            border-radius: 20%;
+            transition: 0.3s;
+        }
+
+        &__delbutton:hover {
+            background: #df4e3d;
         }
     }
 

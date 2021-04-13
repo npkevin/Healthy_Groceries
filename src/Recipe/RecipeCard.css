@@ -2,7 +2,7 @@
   display: inline-block;
   -webkit-perspective: 80rem;
           perspective: 80rem;
-  margin: 1rem;
+  margin: 1rem 1.2rem 0 0;
 }
 
 .recipeCard {
@@ -112,6 +112,46 @@
 
 .recipeCard__content::-webkit-scrollbar {
   display: none;
+}
+
+.recipeCard__deleteOverlay {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+  visibility: hidden;
+}
+
+.recipeCard__deleteOverlay.--editable {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  visibility: initial;
+  opacity: 100%;
+}
+
+.recipeCard__deleteOverlay__delbutton {
+  cursor: pointer;
+  background: #c0392b;
+  border-radius: 20%;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.recipeCard__deleteOverlay__delbutton:hover {
+  background: #df4e3d;
 }
 
 .recipeCard.-flipped {

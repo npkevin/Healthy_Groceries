@@ -17,7 +17,7 @@
 }
 
 .section__label #name {
-    margin: 0.8rem 0;
+    margin: 0.6rem 0;
 }
 
 .section #divider {
@@ -25,21 +25,33 @@
     background: rgba(0, 0, 0, 0.2);
 }
 
-.item-adder-container {
+.section-buttons {
     flex-grow: 1;
-    text-align: end;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 
-.item-adder {
+.section-buttons__adder,
+.section-buttons__edit {
+    margin-left: 0.5rem;
+    height: 2.5rem;
+    width: 2.5rem;
     cursor: pointer;
-    color: #000;
+    color: rgb(53, 53, 53);
+    border-radius: 0.4rem;
     opacity: 35%;
-    border-radius: 50%;
-    transition: 0.3s;
+    transition: 0.2s;
 }
 
-.item-adder:hover {
+.section-buttons__edit.--editable {
+    background: #c0392b;
     opacity: 60%;
+}
+
+.section-buttons__edit:hover,
+.section-buttons__adder:hover {
+    opacity: 80%;
 }
 
 .btn-synched {

@@ -1,7 +1,7 @@
 .RecipeView {
     display: inline-block;
     /* white-space: nowrap; */
-    overflow-x: scroll;
+    /* overflow-x: scroll; */
     overflow-y: hidden;
 }
 

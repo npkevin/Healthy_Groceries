@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './RecipeCard.css';
 
-import { PieChart, List, Plus, Edit3, X, Check } from 'react-feather';
+import { PieChart, List, Plus, Edit3, X, Check, Trash2 } from 'react-feather';
 import Food from './Food'
 import NutritionLabel from '../Food/NutritionLabel'
 import FoodSearch from '../Food/FoodSearch';
@@ -197,6 +197,9 @@ class recipeCard extends Component {
                 Powered By Nutritionix
               </span> */}
             </div>
+            <div className={"recipeCard__deleteOverlay " + (this.props.editable ? "--editable " : "")}>
+              <Trash2 className="recipeCard__deleteOverlay__delbutton" size="10rem" onClick={this.props.deleteSelf} />
+            </div>
           </div>
           <div className="recipeCard__back">
             <div className="recipeCard__navbar">
@@ -211,7 +214,7 @@ class recipeCard extends Component {
               {this.state.foods.length > 0 ?
                 <>
                   <MacroRatio ratio={macros} />
-                  <NutritionLabel serves={this.state.serves} updateServings={ newVal => this.setState({serves: newVal})} langToggle>
+                  <NutritionLabel serves={this.state.serves} updateServings={newVal => this.setState({ serves: newVal })} langToggle>
                     {this.state.foods}
                   </NutritionLabel>
                   <span style={{ fontSize: "0.8rem" }}>* all values are rounded up</span>
