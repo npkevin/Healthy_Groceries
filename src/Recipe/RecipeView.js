@@ -27,12 +27,10 @@ class RecipeView extends Component {
       name: 'new card',
       foods: [],
     }
-    console.log("Adding RecipeCard: ", key)
     this.setState({ cards: cardsCopy })
   }
 
   updateCard = (newCard, cardKey) => {
-    console.log("Updating Card[" + cardKey + "]")
     let cardsCopy = this.state.cards
     cardsCopy[cardKey] = newCard
     this.setState({ cards: cardsCopy, synched: false })
@@ -59,7 +57,6 @@ class RecipeView extends Component {
         <Section className="RecipeView" name="Recipes"
           add={this.addCard}
           synched={this.state.synched}
-          loadState={this.loadState}
           saveState={this.saveState}
         >
           {Object.keys(this.state.cards).length > 0 ?

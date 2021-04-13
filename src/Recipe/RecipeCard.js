@@ -53,10 +53,7 @@ class recipeCard extends Component {
   }
 
   updateName = () => {
-    if (this.state.name !== this.props.name) {
-      console.log("Name Change Detected")
-      this.props.updateCard(this.state)
-    }
+    if (this.state.name !== this.props.name) this.props.updateCard(this.state)
     this.setState({ editable: false })
   }
 
