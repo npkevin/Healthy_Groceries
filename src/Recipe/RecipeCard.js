@@ -214,7 +214,7 @@ class recipeCard extends Component {
                     updateServings={newVal => this.setState({ serves: newVal })}
                     foods={this.state.foods}
                     langToggle />
-                  <span style={{ fontSize: "0.8rem" }}>* all values are rounded up</span>
+                  {/* <span style={{ fontSize: "0.8rem" }}>* all values are rounded up</span> */}
                 </>
                 :
                 <div className="no-data">
