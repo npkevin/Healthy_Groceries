@@ -4,6 +4,8 @@
 }
 
 .section {
+    display: flex;
+    flex-direction: column;
     padding: 0.5rem;
 }
 
@@ -34,7 +36,7 @@
 
 .section-buttons__adder,
 .section-buttons__edit {
-    margin-left: 0.5rem;
+    margin-left: 0.4rem;
     height: 2.5rem;
     width: 2.5rem;
     cursor: pointer;
@@ -59,7 +61,7 @@
     font-weight: bold;
     height: 1.6rem;
     width: 6rem;
-    margin: 0 1rem;
+    margin-left: 1rem;
     border: none;
     border-radius: 1rem;
     box-shadow: 0 0 0.4rem rgba(0, 0, 0, 0.3);
