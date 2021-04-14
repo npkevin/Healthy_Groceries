@@ -295,6 +295,7 @@
         display: flex;
         align-items: center;
         height: 2rem;
+        overflow-x: hidden;
 
         .name,
         img {
@@ -376,7 +377,8 @@
             transition: 0.3s;
 
             &.hide {
-                display: none
+                transform: translateX(3rem);
+                visibility: hidden;
             }
         }
 

@@ -366,6 +366,7 @@
       -ms-flex-align: center;
           align-items: center;
   height: 2rem;
+  overflow-x: hidden;
 }
 
 .recipeCard__foodList__foodItem .name,
@@ -467,7 +468,9 @@
 }
 
 .recipeCard__foodList__foodItem .delete-food.hide {
-  display: none;
+  -webkit-transform: translateX(3rem);
+          transform: translateX(3rem);
+  visibility: hidden;
 }
 
 .recipeCard__foodList__foodItem + .recipeCard__foodList__foodItem {
