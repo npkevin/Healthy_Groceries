@@ -1,4 +1,4 @@
-# Health Groceries / Shopping List
+# Healthy Groceries / Shopping List
 
 ## [Demo Here!](https://npkevin.github.io/Healthy_Groceries/)
 
