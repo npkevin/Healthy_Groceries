@@ -148,7 +148,7 @@
   display: -ms-flexbox;
   display: flex;
   visibility: visible;
-  opacity: 100%;
+  opacity: 1;
 }
 
 .recipeCard__deleteOverlay__delbutton {
@@ -181,13 +181,12 @@
   height: 100%;
   margin: 0;
   background: rgba(0, 0, 0, 0.8);
-  opacity: 100%;
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
 
 .recipeCard__foodSearch.-hide {
-  opacity: 0%;
+  opacity: 0;
   visibility: hidden;
   -webkit-transition: none;
   transition: none;

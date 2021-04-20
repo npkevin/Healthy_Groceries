@@ -118,7 +118,7 @@
         &.--editable {
             display: flex;
             visibility: visible;
-            opacity: 100%;
+            opacity: 1;
         }
 
         &__delbutton {
@@ -148,11 +148,10 @@
     height: 100%;
     margin: 0;
     background: rgba(0, 0, 0, 0.8);
-    opacity: 100%;
     transition: 0.3s;
 
     &.-hide {
-        opacity: 0%;
+        opacity: 0;
         visibility: hidden;
         transition: none;
     }

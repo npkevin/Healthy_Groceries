@@ -42,18 +42,18 @@
     cursor: pointer;
     color: rgb(53, 53, 53);
     border-radius: 0.4rem;
-    opacity: 35%;
+    opacity: 0.35;
     transition: 0.2s;
 }
 
 .section-buttons__edit.--editable {
     background: #c0392b;
-    opacity: 60%;
+    opacity: 0.60;
 }
 
 .section-buttons__edit:hover,
 .section-buttons__adder:hover {
-    opacity: 80%;
+    opacity: 0.80;
 }
 
 .btn-synched {
