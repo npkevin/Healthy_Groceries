@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/healthy_groceries_reactfront/static/css/main.a4c540f5.chunk.css",
+    "main.js": "/healthy_groceries_reactfront/static/js/main.ee388209.chunk.js",
+    "main.js.map": "/healthy_groceries_reactfront/static/js/main.ee388209.chunk.js.map",
+    "runtime-main.js": "/healthy_groceries_reactfront/static/js/runtime-main.b4603611.js",
+    "runtime-main.js.map": "/healthy_groceries_reactfront/static/js/runtime-main.b4603611.js.map",
+    "static/js/2.c9a462b4.chunk.js": "/healthy_groceries_reactfront/static/js/2.c9a462b4.chunk.js",
+    "static/js/2.c9a462b4.chunk.js.map": "/healthy_groceries_reactfront/static/js/2.c9a462b4.chunk.js.map",
+    "static/js/3.b83c0588.chunk.js": "/healthy_groceries_reactfront/static/js/3.b83c0588.chunk.js",
+    "static/js/3.b83c0588.chunk.js.map": "/healthy_groceries_reactfront/static/js/3.b83c0588.chunk.js.map",
+    "index.html": "/healthy_groceries_reactfront/index.html",
+    "static/css/main.a4c540f5.chunk.css.map": "/healthy_groceries_reactfront/static/css/main.a4c540f5.chunk.css.map",
+    "static/js/2.c9a462b4.chunk.js.LICENSE.txt": "/healthy_groceries_reactfront/static/js/2.c9a462b4.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b4603611.js",
+    "static/js/2.c9a462b4.chunk.js",
+    "static/css/main.a4c540f5.chunk.css",
+    "static/js/main.ee388209.chunk.js"
+  ]
+}
