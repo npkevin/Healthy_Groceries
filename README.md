@@ -1,8 +1,8 @@
-# Healthy Groceries / Shopping List
+# Recipe-Cards
 
 ## [Demo Here!](https://npkevin.github.io/Healthy_Groceries/)
 
-This is a simple webapp I created to hang up in my kitchen (with a display). The app simply allows users to create multiple grocery lists (recipes) with a focus on health and nutrition.
+This is a simple webapp I created to hang up in my kitchen (with a touch display). The app simply allows users to create recipes with a nutrition label on the back side.
 
 Created with React and Nutritionix API.
 
