@@ -3,9 +3,10 @@ import './RecipeCard.css';
 
 import { PieChart, List, Plus, Edit3, X, Check, Trash2 } from 'react-feather';
 import Food from './Food'
-import NutritionLabel from '../Food/NutritionLabel'
-import FoodSearch from '../Food/FoodSearch';
 import NIXFood from '../Food/NutritionixAPI/NIXFood';
+import NutritionLabel from '../Food/NutritionLabel'
+import Search from './Search';
+
 import MacroRatio from './MacroRatio'
 
 
@@ -13,84 +14,71 @@ class recipeCard extends Component {
 
   constructor(props) {
     super(props);
-    this.searchInputRef = React.createRef();
     this.state = {
-      name: this.props.name,
-      foods: this.props.foods,
-      serves: this.props.serves,
-      flipped: false,
-      editable: this.props.edit ? true : false,
+      recipeName: props.recipeName,
+      ingredients: props.ingredients, //array of objects
+      servings: props.servings,
+      isFlipped: false,
+      editable: props.editable,
       showSearch: false,
-      searchResult: null,
     }
   }
 
   componentDidUpdate = (prevProps, prevState) => {
     let updateFlag = false
-    if (prevState.foods !== this.state.foods) updateFlag = true
-    if (prevState.serves !== this.state.serves) updateFlag = true
+    console.log(prevState.ingredients);
+    console.log(this.state.ingredients);
+    if (prevState.ingredients !== this.state.ingredients) updateFlag = true
+    if (prevState.servings !== this.state.servings) updateFlag = true
     if (updateFlag) this.props.updateCard(this.state)
   }
 
   addFood = (food) => {
-    const cleanedFood = new NIXFood(food)
-    let foodsCopy = [...this.state.foods];
-    foodsCopy.push(cleanedFood);
-    this.searchInputRef.current.clearSearch();
+    const nixFood = new NIXFood(food)
+    const cleanedFood = nixFood.data
+    let copy = [...this.state.ingredients];
+    copy.push(cleanedFood);
+
     this.setState({
-      foods: foodsCopy,
+      ingredients: copy,
       showSearch: false,
       searchResult: null,
     });
   }
 
   deleteFood = (index) => {
-    let arrayCopy = [...this.state.foods]
-    arrayCopy.splice(index, 1)
+    let copy = [...this.state.ingredients]
+    copy.splice(index, 1)
     this.setState({
-      foods: arrayCopy
+      ingredients: copy
     })
   }
 
   updateName = () => {
-    if (this.state.name !== this.props.name) this.props.updateCard(this.state)
+    if (this.state.recipeName !== this.props.recipeName) this.props.updateCard(this.state)
     this.setState({ editable: false })
   }
 
   discardChanges = () => {
-    // Keep name as non-updated props.name
     this.setState({
       editable: false,
-      name: this.props.name,
+      recipeName: this.props.recipeName, // Keep name as original unsaved name
     })
   }
 
   // This updates parent's (RecipeView) state.cards[this.key].foods
   // Aren't props supposed to be read-only?
   setCustomMeasures = (index, user_data) => {
-    let foodArr = [...this.state.foods];
+    let foodArr = [...this.state.ingredients];
     foodArr[index] = {
-      ...this.state.foods[index],
+      ...this.state.ingredients[index],
       user: user_data,
     }
-    this.setState({ foods: foodArr })
+    this.setState({ ingredients: foodArr })
   }
 
-  flipToBack = () => {
-    this.setState({ flipped: true });
-  }
-
-  onSearchResult = (result) => {
-    if (result.status === "ok") {
-      this.setState({ searchResult: result.message })
-    } else {
-      this.setState({ searchResult: null })
-    }
-  }
-
-  cancelSearch = () => {
-    this.searchInputRef.current.clearSearch();
-    this.setState({ showSearch: false, searchResult: null })
+  flipToSide = (side) => {
+    this.setState({ isFlipped: side === "front" ? false : true });
   }
 
   getMacros = () => {
@@ -98,7 +86,7 @@ class recipeCard extends Component {
     let totalMacros = { f: 0, c: 0, p: 0 }
 
     // Each food is an NIXFood
-    this.state.foods.forEach(food => {
+    this.state.ingredients.forEach(food => {
       totalMacros.f += food.user ? food.user.nutrients.totalFats : food.nutrients.totalFats;
       totalMacros.p += food.user ? food.user.nutrients.totalProtiens : food.nutrients.totalProtiens;
       totalMacros.c += food.user ? food.user.nutrients.totalCarbs : food.nutrients.totalCarbs;
@@ -113,7 +101,7 @@ class recipeCard extends Component {
         <div className={"recipeCard__deleteOverlay " + (this.props.editable ? "--editable " : "")}>
           <Trash2 className="recipeCard__deleteOverlay__delbutton" size="10rem" onClick={this.props.deleteSelf} />
         </div>
-        <div className={"recipeCard" + (this.state.flipped ? " -flipped" : "")}>
+        <div className={"recipeCard" + (this.state.isFlipped ? " -flipped" : "")}>
           <div className="recipeCard__front">
             <div className="recipeCard__navbar">
               <List className="recipeCard__navbar__icon" />
@@ -121,17 +109,17 @@ class recipeCard extends Component {
                 <>
                   <input
                     className="recipeCard__navbar__label -edit"
-                    type="text" value={this.state.name}
-                    onChange={e => this.setState({ name: e.target.value })}
+                    type="text" value={this.state.recipeName}
+                    onChange={e => this.setState({ recipeName: e.target.value })}
                   />
                   <Check className="recipeCard__navbar__button" onClick={this.updateName} />
                   <X className="recipeCard__navbar__button" onClick={this.discardChanges} />
                 </>
                 :
                 <>
-                  <span className="recipeCard__navbar__label">{this.state.name}</span>
+                  <span className="recipeCard__navbar__label">{this.state.recipeName}</span>
                   <Edit3 className="recipeCard__navbar__button" onClick={() => this.setState({ editable: true })} />
-                  <PieChart className="recipeCard__navbar__button" onClick={this.flipToBack} />
+                  <PieChart className="recipeCard__navbar__button" onClick={() => this.flipToSide("back")} />
                   <Plus className="recipeCard__navbar__button" onClick={() => this.setState({ showSearch: true })} />
                 </>
               }
@@ -140,9 +128,9 @@ class recipeCard extends Component {
               {/* =========================
             FOOD/INGREDIENT LIST
             ============================= */}
-              {this.state.foods.length > 0 ?
+              {this.state.ingredients.length > 0 ?
                 <ul className="recipeCard__foodList">
-                  {this.state.foods.map((food, index) => {
+                  {this.state.ingredients.map((food, index) => {
                     return (<Food
                       edit={this.state.editable}
                       className="recipeCard__foodList__foodItem"
@@ -162,57 +150,29 @@ class recipeCard extends Component {
                 </ul>
                 : null}
             </div>
-            <div className={"recipeCard__foodSearch " + (this.state.showSearch ? "" : "-hide ")}>
-              <div className="recipeCard__foodSearch__input">
-                <FoodSearch onResult={res => this.onSearchResult(res)} ref={this.searchInputRef} />
-                <button onClick={this.cancelSearch}><X /></button>
-              </div>
-              <span className="attribution">Powered By Nutritionix</span>
-              <div className={"recipeCard__foodSearch__results " + (this.state.searchResult ? "" : "no-results")}>
-                {this.state.searchResult ? (
-                  <>
-                    <ul className="result">
-                      {this.state.searchResult.common.map((food, index) => {
-                        return (
-                          <li key={"cfood_" + index} className="result__food common" onClick={() => this.addFood(food)}>
-                            <div className="type common"></div>
-                            <img src={food.photo.thumb} alt="" />
-                            <span>{NIXFood.capitalizeEachWord(food.food_name)}</span>
-                          </li>
-                        )
-                      })}
-                      {this.state.searchResult.branded.map((food, index) => {
-                        return (
-                          <li key={"bfood_" + index} className="result__food branded" onClick={() => this.addFood(food)}>
-                            <div className="type branded"></div>
-                            <img src={food.photo.thumb} alt="" />
-                            <span>{NIXFood.capitalizeEachWord(food.food_name)}</span>
-                          </li>
-                        )
-                      })}
-                    </ul>
-                  </>
-                ) : null}
-              </div>
-            </div>
+            <Search
+              showSearch={this.state.showSearch}
+              setShowSearch={bool => this.setState({ showSearch: bool })}
+              addFoodToCard={this.addFood}
+            />
           </div>
           <div className="recipeCard__back">
             <div className="recipeCard__navbar">
               <PieChart className="recipeCard__navbar__icon" />
               <span className="recipeCard__navbar__label">Nutrients</span>
-              <List className="recipeCard__navbar__button" onClick={() => this.setState({ flipped: false })} />
+              <List className="recipeCard__navbar__button" onClick={() => this.flipToSide("front")} />
             </div>
             <div className="recipeCard__content">
               {/* ==============
             NUTRIENTS
             ================== */}
-              {this.state.foods.length > 0 ?
+              {this.state.ingredients.length > 0 ?
                 <>
                   <MacroRatio ratio={macros} />
                   <NutritionLabel
-                    serves={this.state.serves}
-                    updateServings={newVal => this.setState({ serves: newVal })}
-                    foods={this.state.foods}
+                    serves={this.state.servings}
+                    updateServings={newVal => this.setState({ servings: newVal })}
+                    foods={this.state.ingredients}
                     langToggle />
                   {/* <span style={{ fontSize: "0.8rem" }}>* all values are rounded up</span> */}
                 </>

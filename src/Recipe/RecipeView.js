@@ -26,22 +26,22 @@ class RecipeView extends Component {
     return (
       <>
         <Section className="RecipeView" name="Recipes"
-          add={this.addCard}
-          edit={() => this.setState({ editable: !this.state.editable })}
           editable={this.state.editable}
           synched={this.state.synched}
           saveState={this.saveState}
+          addCardFunc={this.addCard}
+          toggleEdit={() => this.setState({ editable: !this.state.editable })}
         >
           {Object.keys(this.state.cards).length > 0 ?
-            Object.keys(this.state.cards).sort().reverse().map(cardKey => {
+            Object.keys(this.state.cards).map(cardKey => {
               return <RecipeCard
-                name={this.state.cards[cardKey].name}
-                foods={this.state.cards[cardKey].foods}
-                serves={this.state.cards[cardKey].serves}
-                updateCard={newCard => this.updateCard(newCard, cardKey)}
+                recipeName={this.state.cards[cardKey].recipeName}
+                ingredients={this.state.cards[cardKey].ingredients}
+                servings={this.state.cards[cardKey].servings}
                 editable={this.state.editable}
                 deleteSelf={() => this.deleteCard(cardKey)}
                 key={cardKey}
+                updateCard={newCard => this.updateCard(cardKey, newCard)}
               />
             })
             : null}
@@ -54,9 +54,9 @@ class RecipeView extends Component {
     const key = uuidv1();
     let cardsCopy = this.state.cards
     cardsCopy[key] = {
-      name: 'new card',
-      foods: [],
-      serves: 1
+      recipeName: 'new card',
+      ingredients: [],
+      servings: 1
     }
     this.setState({ cards: cardsCopy, synched: false })
   }
@@ -68,7 +68,7 @@ class RecipeView extends Component {
     this.setState({ cards: cardsCopy, synched: false })
   }
 
-  updateCard = (newCard, cardKey) => {
+  updateCard = (cardKey, newCard) => {
     let cardsCopy = this.state.cards
     cardsCopy[cardKey] = newCard
     this.setState({ cards: cardsCopy, synched: false })
