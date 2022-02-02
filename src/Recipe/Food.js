@@ -92,10 +92,7 @@ class Food extends Component {
     return (
       <li className={this.props.className}>
         <div className="weight">
-          <input type="number"
-            value={this.state.user_weight}
-            onChange={e => this.weightChange(e.target.value)}
-          />
+          <input type="number" value={this.state.user_weight} onChange={e => this.weightChange(e.target.value)} />
           <select defaultValue={this.state.user_unit} onChange={e => this.unitChange(e.target.value)}>
             <option value="gram">g</option>
             <option value="pound">lb</option>
