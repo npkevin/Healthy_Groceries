@@ -1,22 +1,15 @@
 {
   "files": {
-    "main.css": "/Healthy_Groceries/static/css/main.35831c2a.chunk.css",
-    "main.js": "/Healthy_Groceries/static/js/main.3bdb4155.chunk.js",
-    "main.js.map": "/Healthy_Groceries/static/js/main.3bdb4155.chunk.js.map",
-    "runtime-main.js": "/Healthy_Groceries/static/js/runtime-main.de8f2022.js",
-    "runtime-main.js.map": "/Healthy_Groceries/static/js/runtime-main.de8f2022.js.map",
-    "static/js/2.1a56eeae.chunk.js": "/Healthy_Groceries/static/js/2.1a56eeae.chunk.js",
-    "static/js/2.1a56eeae.chunk.js.map": "/Healthy_Groceries/static/js/2.1a56eeae.chunk.js.map",
-    "static/js/3.0235c6c2.chunk.js": "/Healthy_Groceries/static/js/3.0235c6c2.chunk.js",
-    "static/js/3.0235c6c2.chunk.js.map": "/Healthy_Groceries/static/js/3.0235c6c2.chunk.js.map",
-    "index.html": "/Healthy_Groceries/index.html",
-    "static/css/main.35831c2a.chunk.css.map": "/Healthy_Groceries/static/css/main.35831c2a.chunk.css.map",
-    "static/js/2.1a56eeae.chunk.js.LICENSE.txt": "/Healthy_Groceries/static/js/2.1a56eeae.chunk.js.LICENSE.txt"
+    "main.css": "/Recipe-Cards/static/css/main.ddc3d167.css",
+    "main.js": "/Recipe-Cards/static/js/main.99a51fb9.js",
+    "static/js/377.d4126422.chunk.js": "/Recipe-Cards/static/js/377.d4126422.chunk.js",
+    "index.html": "/Recipe-Cards/index.html",
+    "main.ddc3d167.css.map": "/Recipe-Cards/static/css/main.ddc3d167.css.map",
+    "main.99a51fb9.js.map": "/Recipe-Cards/static/js/main.99a51fb9.js.map",
+    "377.d4126422.chunk.js.map": "/Recipe-Cards/static/js/377.d4126422.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.de8f2022.js",
-    "static/js/2.1a56eeae.chunk.js",
-    "static/css/main.35831c2a.chunk.css",
-    "static/js/main.3bdb4155.chunk.js"
+    "static/css/main.ddc3d167.css",
+    "static/js/main.99a51fb9.js"
   ]
 }
