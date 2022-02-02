@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
+
+import { v1 as uuidv1 } from 'uuid';
+
 import Section from '../Section'
 import RecipeCard from './RecipeCard'
 import './RecipeView.css';
@@ -17,46 +20,6 @@ class RecipeView extends Component {
 
   componentDidMount = () => {
     this.loadState()
-  }
-
-  addCard = () => {
-    // Keys should be unique, for this purpose date.now() is fine
-    // User will find it very hard to add a new card in the same millisecond
-    const key = Date.now();
-    let cardsCopy = this.state.cards
-    cardsCopy[key] = {
-      name: 'new card',
-      foods: [],
-      serves: 1
-    }
-    this.setState({ cards: cardsCopy, synched: false })
-  }
-
-  deleteCard = (key) => {
-    console.log(key)
-    let cardsCopy = this.state.cards
-    delete cardsCopy[key]
-    this.setState({ cards: cardsCopy, synched: false})
-  }
-
-  updateCard = (newCard, cardKey) => {
-    let cardsCopy = this.state.cards
-    cardsCopy[cardKey] = newCard
-    this.setState({ cards: cardsCopy, synched: false })
-  }
-
-  saveState = () => {
-    const db = firebase.app().firestore()
-    const state = this.state.cards
-    db.collection('user-recipes').doc('guest').set(state)
-    this.setState({ synched: true })
-  }
-
-  loadState = () => {
-    const db = firebase.app().firestore()
-    db.collection('user-recipes').doc('guest').get().then(query => {
-      this.setState({ cards: query.data(), synched: true })
-    })
   }
 
   render = () => {
@@ -87,6 +50,43 @@ class RecipeView extends Component {
     )
   }
 
+  addCard = () => {
+    const key = uuidv1();
+    let cardsCopy = this.state.cards
+    cardsCopy[key] = {
+      name: 'new card',
+      foods: [],
+      serves: 1
+    }
+    this.setState({ cards: cardsCopy, synched: false })
+  }
+
+  deleteCard = (key) => {
+    console.log(key)
+    let cardsCopy = this.state.cards
+    delete cardsCopy[key]
+    this.setState({ cards: cardsCopy, synched: false })
+  }
+
+  updateCard = (newCard, cardKey) => {
+    let cardsCopy = this.state.cards
+    cardsCopy[cardKey] = newCard
+    this.setState({ cards: cardsCopy, synched: false })
+  }
+
+  saveState = () => {
+    const db = firebase.app().firestore()
+    const state = this.state.cards
+    db.collection('user-recipes').doc('guest').set(state)
+    this.setState({ synched: true })
+  }
+
+  loadState = () => {
+    const db = firebase.app().firestore()
+    db.collection('user-recipes').doc('guest').get().then(query => {
+      this.setState({ cards: query.data(), synched: true })
+    })
+  }
 }
 
 export default RecipeView;
