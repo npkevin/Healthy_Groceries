@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './NutritionLabel.css'
 import './NutritionLabel-custom.css'
-import { ChevronDown, ChevronUp } from 'react-feather'
+import { Plus, Minus } from 'react-feather'
 
 
 // Follows https://www.inspection.gc.ca/food-label-requirements/labelling/industry/nutrition-labelling/nutrition-facts-table-formats/eng/1389209684841/1389210023155?chap=0#s2c2
@@ -129,9 +129,9 @@ class NutritionLabel extends Component {
           <h1>{tittle_phrase}</h1>
         </div>
         <div className="serving-size">
-          <button className="valbtn-minus" onClick={() => this.incrementServes(-1)}><ChevronDown /></button>
+          <button className="valbtn-minus" onClick={() => this.incrementServes(-1)}><Minus /></button>
           <span className="value">{this.state.serves}</span>
-          <button className="valbtn-plus" onClick={() => this.incrementServes(1)}><ChevronUp /></button>
+          <button className="valbtn-plus" onClick={() => this.incrementServes(1)}><Plus /></button>
           <span className="text"> {servings_phrase}</span>
         </div>
         <HR />
@@ -191,16 +191,16 @@ class NutritionLabel extends Component {
 
         {/* Daily Value Footnote */}
         {this.state.lang_fr ?
-          <span style={{ fontSize: "0.8rem" }}>
-            <span style={{ fontWeight: "bold" }}>*</span> 5% ou moins c'est
-          <span style={{ fontWeight: "bold" }}> peu</span>, 15% ou plus c'est
-          <span style={{ fontWeight: "bold" }}> beaucoup</span>
+          <span className="NL_footnote">
+            <span>*</span> 5% ou moins c'est
+            <span> peu</span>, 15% ou plus c'est
+            <span> beaucoup</span>
           </span>
           :
-          <span style={{ fontSize: "0.8rem" }}>
-            <span style={{ fontWeight: "bold" }}>*</span> 5% or less is
-          <span style={{ fontWeight: "bold" }}> a little</span>, 15% or more is
-          <span style={{ fontWeight: "bold" }}> a lot</span>
+          <span className="NL_footnote">
+            <span>*</span> 5% or less is
+            <span> a little</span>, 15% or more is
+            <span> a lot</span>
           </span>
         }
 

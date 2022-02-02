@@ -65,14 +65,12 @@
 } 
 
 .serving-size .value {
+    background-color: #dddddd;
     text-align: center;
-    background-color: #fbc531;
+    line-height: 1.5rem;
     height: 1.5rem;
-    width: 2.5em;
-    font-size: 1.2rem;
+    width: 2rem;
     font-weight: bold;
-    color: #fff;
-    user-select: none;
 }
 
 .serving-size .valbtn-plus,
@@ -81,11 +79,9 @@
     justify-content: center;
     align-items: center;
     height: 1.5rem;
-    width: 2rem;
-    background-color: #e1b12c;
-    color: #fff;
+    width: 1.5rem;
+    background-color: #d3d3d3;
     border: none;
-    border-radius: 0.5rem;
     cursor: pointer;
 }
 
@@ -101,17 +97,22 @@
 
 .bling-toggle {
     float: right;
-    position: relative;
-    top: 0.2em;
-    right: 0.2em;
-    background: #cbcdce;
-    padding: 0.1em 0.5em;
-    border-radius: 0.5em;
+    background: #d3d3d3;
+    margin: 0.2;
+    padding: 0.3rem 0.6rem;
     user-select: none;
     cursor: pointer;
 }
 
 .bling-toggle .selected {
+    font-weight: bold;
+}
+
+.NL_footnote {
+    font-size: 0.8rem;
+}
+
+.NL_footnote span {
     font-weight: bold;
 }
 
