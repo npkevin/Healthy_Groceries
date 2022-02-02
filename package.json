@@ -13,8 +13,9 @@
     "react-chartjs-2": "^2.11.1",
     "react-dom": "^17.0.2",
     "react-feather": "^2.0.9",
-    "react-scripts": "4.0.1",
+    "react-scripts": "^5.0.0",
     "react-select": "^4.3.0",
+    "uuid": "^8.3.2",
     "web-vitals": "^0.2.4"
   },
   "homepage": "https://npkevin.github.io/Healthy_Groceries/",
