@@ -1,6 +1,6 @@
 # Recipe-Cards
 
-## [Demo Here!](https://npkevin.github.io/Healthy_Groceries/)
+## [Demo Here!](https://npkevin.github.io/Recipe-Cards/)
 
 This is a simple webapp I created to hang up in my kitchen (with a touch display). The app simply allows users to create recipes with a nutrition label on the back side.
 
