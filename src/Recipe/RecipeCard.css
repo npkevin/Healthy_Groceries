@@ -6,8 +6,8 @@
 }
 
 .recipeCard {
-  width: 20rem;
-  height: 30rem;
+  width: 25rem;
+  height: 35rem;
   -webkit-transform-style: preserve-3d;
           transform-style: preserve-3d;
   -webkit-transition: 0.6s;
@@ -106,19 +106,11 @@
 
 .recipeCard__content {
   height: 100%;
-  overflow-y: overlay;
+  width: -webkit-fill-available;
+  width: -moz-available;
+  width: fill;
+  overflow-y: auto;
   padding: 0.5rem;
-}
-
-.recipeCard__content::-webkit-scrollbar {
-  width: 1.5rem;
-}
-
-.recipeCard__content::-webkit-scrollbar-thumb {
-  border: 0.4rem solid rgba(0, 0, 0, 0);
-  background-clip: padding-box;
-  background-color: rgba(0, 0, 0, 0.15);
-  border-radius: 1rem;
 }
 
 .recipeCard__deleteOverlay {
@@ -334,16 +326,10 @@
 .recipeCard__foodSearch .attribution {
   color: #fff;
   font-weight: bold;
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
   -ms-flex-item-align: center;
       -ms-grid-row-align: center;
       align-self: center;
-  margin-top: 0.5rem;
-  border-radius: 1rem;
-  padding: 0.3rem 1rem;
-  background-color: #f1c40f;
+  margin-top: 1rem;
 }
 
 .recipeCard__foodSearch__results.no-results {
@@ -483,9 +469,6 @@
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-}
-
-.macroRatio__f, .macroRatio__c, .macroRatio__p {
   height: 0.5rem;
 }
 

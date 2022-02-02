@@ -1,3 +1,11 @@
+$card-width: 25rem;
+$card-height: 35rem;
+$card-bg-colour: #fff;
+
+$card-nav-colour__front: #2980b9;
+$card-nav-colour__back: #27ae60;
+
+
 .recipeCard-Container {
     display: inline-block;
     perspective: 80rem;
@@ -5,8 +13,8 @@
 }
 
 .recipeCard {
-    width: 20rem;
-    height: 30rem;
+    width: $card-width;
+    height: $card-height;
     transform-style: preserve-3d;
     transition: 0.6s;
 
@@ -63,7 +71,7 @@
         flex-direction: column;
         width: 100%;
         height: 100%;
-        background-color: #fff;
+        background-color: $card-bg-colour;
         border-radius: 0.4rem;
         box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.15);
         overflow: hidden;
@@ -72,7 +80,7 @@
 
     &__front {
         .recipeCard__navbar {
-            background-color: #2980b9;
+            background-color: $card-nav-colour__front;
         }
     }
 
@@ -80,25 +88,15 @@
         transform: rotateY(180deg);
 
         .recipeCard__navbar {
-            background-color: #27ae60;
+            background-color: $card-nav-colour__back;
         }
     }
 
     &__content {
         height: 100%;
-        overflow-y: overlay;
+        width: fill;
+        overflow-y: auto;
         padding: 0.5rem;
-
-        &::-webkit-scrollbar {
-            width: 1.5rem;
-        }
-
-        &::-webkit-scrollbar-thumb {
-            border: 0.4rem solid rgba(0, 0, 0, 0);
-            background-clip: padding-box;
-            background-color: rgba(0, 0, 0, 0.15);
-            border-radius: 1rem;
-        }
     }
 
     &__deleteOverlay {
@@ -270,12 +268,8 @@
     .attribution {
         color: #fff;
         font-weight: bold;
-        width: fit-content;
         align-self: center;
-        margin-top: 0.5rem;
-        border-radius: 1rem;
-        padding: 0.3rem 1rem;
-        background-color: #f1c40f;
+        margin-top: 1rem;
     }
 
     &__results.no-results {
@@ -390,12 +384,7 @@
 .macroRatio {
     display: flex;
     justify-content: center;
-
-    &__f,
-    &__c,
-    &__p {
-        height: 0.5rem;
-    }
+    height: 0.5rem;
 
     &__f {
         background-color: #f1c40f;
