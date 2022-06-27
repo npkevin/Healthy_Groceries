@@ -1,4 +1,4 @@
-# Recipe-Cards
+# Nutriton-Label-EN-FR-Gen
 
 ## [Demo Here!](https://npkevin.github.io/Recipe-Cards/)
 
